@@ -1,0 +1,32 @@
+export default {
+    router:{
+        Home:'主页',
+        My:'我的'
+    },
+    exhibitionInfo:{
+        title:'展会列表',
+        'nigeriatex':{
+            title:'尼日利亚国际纺织服装博览会'
+        },
+        'autoequip-nigeria':{
+            title:'尼日利亚国际汽车零配件展览会'
+        },
+        'homeshow-colombia':{
+            title:'哥伦比亚家庭用品礼品展'
+        },
+        'homeshow-nigeria':{
+            title:'尼日利亚国际家庭用品礼品展览会'
+        }
+    },
+    changeExhibition:'展会切换成功',
+    login:{
+        btn:'登录',
+        success:'登录成功',
+        LoginName:'手机号',
+        LoginPass:'密码',
+    },
+    logout:{
+        btn:'退出',
+        success:'退出成功',
+    },
+}
