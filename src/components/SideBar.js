@@ -103,7 +103,6 @@ class App extends Component {
                     </Button>
                 </View>
             </View>
-
         );
     }
 }

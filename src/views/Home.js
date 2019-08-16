@@ -7,6 +7,7 @@ import { Drawer, Header, Left, Body, Button,Title,Icon } from 'native-base';
 import Util from '../libs/libs';
 import Layout  from '../components/Layout';
 import Banner from '../components/Banner';
+import Search from '../components/Search';
 import SideBar from '../components/SideBar';
 import NewButton from '../components/NewButton';
 
@@ -28,7 +29,7 @@ class App extends Component {
 
     componentDidMount(){
         const { navigation} = this.props;
-        // navigation.navigate('MatchupExpo');
+        // navigation.navigate('Login');
     }
 
     render() {
@@ -54,6 +55,7 @@ class App extends Component {
                         </Body>
                     </Header>
                     <Banner domain={exhibition.domain} url='/api/b2bbanner'></Banner>
+                    <Search domain={exhibition.domain} url='/api/b2bbanner'></Search>
                 </Drawer>
             </Layout>
         );

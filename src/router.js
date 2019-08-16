@@ -1,8 +1,8 @@
 import React, {Component}  from 'react';
 import {
-    TouchableOpacity,
     Image,
     Text,
+    StatusBar,
     PixelRatio
 } from 'react-native';
 import {
@@ -15,6 +15,7 @@ import {strings} from './language/I18n.js';
 
 import Home from './views/Home.js';
 import MatchupExpo from './views/MatchupExpo.js';
+import MatchupExpoDetail from './views/MatchupExpoDetail.js';
 import My from './views/My.js';
 import Other from './views/Other.js';
 import Login from './views/Login.js';
@@ -68,7 +69,7 @@ const CreateTab = createMaterialTopTabNavigator({
         })
     }
 }, {
-    initialRouteName: 'MatchupExpo',
+    initialRouteName: 'Home',
     tabBarPosition: 'bottom',
     lazy: true,
     swipeEnabled: false,
@@ -111,6 +112,13 @@ var stackRoutes = {
             // header:null
         }
     },
+    MatchupExpoDetail: {
+        screen: MatchupExpoDetail,
+        navigationOptions: {
+            title: '',
+            // header:null
+        }
+    },
     About: {
         screen: About,
         navigationOptions: {
@@ -118,7 +126,27 @@ var stackRoutes = {
         }
     }
 };
-const StacksOverTabs = createStackNavigator(stackRoutes);
+const StacksOverTabs = createStackNavigator(stackRoutes,{
+    onTransitionEnd :(transitionProps,prevTransitionProps)=>{
+        let routeName;
+        // console.log(transitionProps)
+        if(transitionProps.scene.route.routes){
+            let routeIndex = transitionProps.scene.route.index;
+            routeName = transitionProps.scene.route.routes[routeIndex].routeName;
+        }else{
+            routeName = transitionProps.scene.route.routeName;
+        }
+        // console.log(routeName);
+
+        if(routeName == 'MatchupExpo'){
+            StatusBar.setBackgroundColor('#efefef');
+            StatusBar.setBarStyle('dark-content');
+        }else{
+            StatusBar.setBackgroundColor('#324191');
+            StatusBar.setBarStyle('light-content');
+        }
+    }
+});
 
 // 需要拦截登录的页面
 function checkAuth(routeName){

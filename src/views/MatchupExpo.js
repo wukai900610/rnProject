@@ -8,13 +8,13 @@
 
 import React,{Component}  from 'react';
 import {
-    View,
-  StyleSheet,
+    StyleSheet,
 } from 'react-native';
-import { Container, Header,Left,Body,Right,Title, Tab, Tabs, ScrollableTab } from 'native-base';
+import { Container, Header,Left,Body,Right,Title, } from 'native-base';
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import Util from '../libs/libs';
 import Layout  from '../components/Layout';
-import Tab1  from '../views/My';
+import Expolist  from '../components/Expolist';
 import {connect} from 'react-redux';
 
 class App extends Component {
@@ -45,19 +45,21 @@ class App extends Component {
             let level2 = values[1]
             let level3 = values[2]
             let tempData = []
+
             // 三级目录合成到二级目录
             level2.map((item)=>{
-              item.children = []
-              level3.map((item2)=>{
+                item.children = []
+                level3.map((item2)=>{
                     if(item.ID == item2.ParentID){
                         item.children.push(item2)
                     }
                 })
             })
+
             // 二级目录合成到一级目录
             level1.map((item)=>{
-              item.children = []
-              level2.map((item2)=>{
+                item.children = []
+                level2.map((item2)=>{
                     if(item.ID == item2.ParentID){
                         item.children.push(item2)
                     }
@@ -67,8 +69,6 @@ class App extends Component {
             _this.setState({
                 category:level1
             });
-
-            // console.log(level1)
         });
     }
 
@@ -77,24 +77,22 @@ class App extends Component {
     }
 
     render() {
-        console.log('render')
         return (
             <Layout>
                 <Container>
-                    <Header hasTabs>
-                        <Body style={{alignItems:'center'}}>
-                            <Title>Matchup Expo</Title>
-                        </Body>
-                    </Header>
-                    <Tabs renderTabBar={()=> <ScrollableTab />}>
+                    <ScrollableTabView
+                        initialPage={0}
+                        renderTabBar={() => <ScrollableTabBar />}
+                        tabBarUnderlineStyle={{height:1,backgroundColor:'#3f51b5'}}
+                        tabBarActiveTextColor="#3f51b5"
+                        tabBarInactiveTextColor ="#ccc"
+                    >
                         {
                             this.state.category.map((item,index)=>
-                                <Tab heading={item.Name} key={index}>
-                                    <Tab1 />
-                                </Tab>
+                                <Expolist {...this.props} data={item} tabLabel={item.Name} key={index}/>
                             )
                         }
-                    </Tabs>
+                    </ScrollableTabView>
                 </Container>
             </Layout>
         );

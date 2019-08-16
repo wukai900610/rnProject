@@ -106,6 +106,8 @@ export default connect(mapStateToProps)(App);
 const styles = StyleSheet.create({
     content:{
         marginLeft:10,
-        marginRight:10
+        marginRight:10,
+        flex:1,
+        justifyContent:'center'
     },
 });
