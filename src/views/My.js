@@ -25,76 +25,72 @@ class App extends React.Component {
             status:'',
             navLevel1:[
                 {
-                    title:'参展报名',
-                    type:'czbm',
-                    ico:require('../static/serviceHallPageIco1.png')
-                },{
-                    title:'报名信息',
+                    title:'My.ExhibitionManagement.Info',
                     type:'bmxx',
                     ico:require('../static/serviceHallPageIco2.png')
                 }
             ],
             navLevel2:[
                 {
-                    title:'全部公司',
+                    title:'My.ManageCompanies.Info',
                     type:'jbxx',
                     ico:require('../static/serviceHallPageIco4.png')
                 },
                 {
-                    title:'添加公司',
+                    title:'My.ManageCompanies.Add',
                     type:'jbxx',
                     ico:require('../static/serviceHallPageIco4.png')
                 }
             ],
             navLevel3:[
                 {
-                    title:'全部产品',
+                    title:'My.ManageProducts.All',
                     type:'jbxx',
                     ico:require('../static/serviceHallPageIco4.png')
                 },
                 {
-                    title:'添加产品',
+                    title:'My.ManageProducts.Add',
                     type:'jbxx',
                     ico:require('../static/serviceHallPageIco4.png')
                 }
             ],
             navLevel4:[
                 {
-                    title:'全部商机',
+                    title:'My.ManageOffers.All',
                     type:'jbxx',
                     ico:require('../static/serviceHallPageIco4.png')
                 },
                 {
-                    title:'添加商机',
+                    title:'My.ManageOffers.Add',
                     type:'jbxx',
                     ico:require('../static/serviceHallPageIco4.png')
                 }
             ],
             navLevel5:[
                 {
-                    title:'待回复',
+                    title:'My.ManageMeetings.New',
                     type:'task',
                     ico:require('../static/serviceHallPageIco5.png')
                 },
                 {
-                    title:'已回复',
+                    title:'My.ManageMeetings.Replied',
                     type:'task',
                     ico:require('../static/serviceHallPageIco5.png')
                 },
                 {
-                    title:'主动邀约',
+                    title:'My.ManageMeetings.Invitations',
                     type:'task',
                     ico:require('../static/serviceHallPageIco5.png')
                 }
             ],
             navLevel6:[
                 {
-                    title:'发件箱',
+                    title:'My.ManageInquiries.Sent',
                     type:'task',
                     ico:require('../static/serviceHallPageIco5.png')
                 },
                 {
-                    title:'收件箱',
+                    title:'My.ManageInquiries.Inbox',
                     type:'task',
                     ico:require('../static/serviceHallPageIco5.png')
                 }
@@ -155,9 +151,7 @@ class App extends React.Component {
             navLevelArr.push(
                 <TouchableOpacity style={styles.navItem} key={index} onPress={()=>{this.goToPage(item)}}>
                     <Image source={item.ico} style={styles.navImg} />
-                    <Text style={{fontSize:12}}>
-                        {item.title}
-                    </Text>
+                    <Text style={{fontSize:12}}>{strings(item.title)}</Text>
                 </TouchableOpacity>
             )
         });
@@ -176,7 +170,7 @@ class App extends React.Component {
                     <View style={{marginLeft:5,marginRight:5}}>
                         <View style={styles.navLevel}>
                             <View style={styles.navLevelTitle}>
-                                <Text style={styles.navLevelTitleText}>自办展参展管理</Text>
+                                <Text style={styles.navLevelTitleText}>{strings('My.ExhibitionManagement.title')}</Text>
                             </View>
                             <View style={styles.navLevelBox}>
                                 {
@@ -186,7 +180,7 @@ class App extends React.Component {
                         </View>
                         <View style={styles.navLevel}>
                             <View style={styles.navLevelTitle}>
-                                <Text style={styles.navLevelTitleText}>公司管理</Text>
+                                <Text style={styles.navLevelTitleText}>{strings('My.ManageCompanies.title')}</Text>
                             </View>
                             <View style={styles.navLevelBox}>
                                 {
@@ -196,7 +190,7 @@ class App extends React.Component {
                         </View>
                         <View style={styles.navLevel}>
                             <View style={styles.navLevelTitle}>
-                                <Text style={styles.navLevelTitleText}>产品管理</Text>
+                                <Text style={styles.navLevelTitleText}>{strings('My.ManageProducts.title')}</Text>
                             </View>
                             <View style={styles.navLevelBox}>
                                 {
@@ -206,7 +200,7 @@ class App extends React.Component {
                         </View>
                         <View style={styles.navLevel}>
                             <View style={styles.navLevelTitle}>
-                                <Text style={styles.navLevelTitleText}>商机管理</Text>
+                                <Text style={styles.navLevelTitleText}>{strings('My.ManageOffers.title')}</Text>
                             </View>
                             <View style={styles.navLevelBox}>
                                 {
@@ -216,7 +210,7 @@ class App extends React.Component {
                         </View>
                         <View style={styles.navLevel}>
                             <View style={styles.navLevelTitle}>
-                                <Text style={styles.navLevelTitleText}>配对邀约管理</Text>
+                                <Text style={styles.navLevelTitleText}>{strings('My.ManageMeetings.title')}</Text>
                             </View>
                             <View style={styles.navLevelBox}>
                                 {
@@ -226,7 +220,7 @@ class App extends React.Component {
                         </View>
                         <View style={styles.navLevel}>
                             <View style={styles.navLevelTitle}>
-                                <Text style={styles.navLevelTitleText}>联系信管理</Text>
+                                <Text style={styles.navLevelTitleText}>{strings('My.ManageInquiries.title')}</Text>
                             </View>
                             <View style={styles.navLevelBox}>
                                 {

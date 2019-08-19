@@ -8,27 +8,27 @@ import Router from './router'
 import { BackHandler, ToastAndroid, Platform } from 'react-native';
 
 export default class App extends Component {
-    onBackAndroid = () => {
-        if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
-            BackHandler.exitApp()
-            return false
-        }
-        this.lastBackPressed = Date.now()
-        ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT)
-        return true
-    };
+    // onBackAndroid = () => {
+    //     if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+    //         BackHandler.exitApp()
+    //         return false
+    //     }
+    //     this.lastBackPressed = Date.now()
+    //     ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT)
+    //     return true
+    // };
 
-    componentDidMount() {
-        if (Platform.OS === 'android') {
-            BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
-        }
-    }
-
-    componentWillUnmount() {
-        if (Platform.OS === 'android') {
-            BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid)
-        }
-    }
+    // componentDidMount() {
+    //     if (Platform.OS === 'android') {
+    //         BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
+    //     }
+    // }
+    //
+    // componentWillUnmount() {
+    //     if (Platform.OS === 'android') {
+    //         BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid)
+    //     }
+    // }
 
     render () {
         return (

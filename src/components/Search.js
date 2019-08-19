@@ -1,40 +1,45 @@
 import React from 'react';
-import {View, TouchableOpacity} from 'react-native';
-import { Item,Picker,Icon,Input } from 'native-base';
+import {View} from 'react-native';
 
-class newButton extends React.PureComponent {
+import NewButton from './NewButton';
+import NewInput from './NewInput';
+
+// import { ajaxGsListPageData,GsSearch } from '../actions/actions';
+// import Util from '../libs/libs';
+
+class Search extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.state = {
-            selected:''
-        }
-    }
-
-    onValueChange(value){
-        this.setState({
-            selected:value
-        })
+        this.state = {}
     }
 
     render() {
+        let {placeholder,title}=this.props
         return (
-            <View style={{flexDirection:'row'}}>
-                <Item style={styles.search}>
-                    <Icon name="ios-search" />
-                    <Input placeholder="Search" />
-                </Item>
+            <View style={styles.search}>
+                <NewInput placeholder={placeholder} ref={(e) => {this.newInput = e;}} style={styles.NewInput} round />
+                <NewButton title={title} style={styles.searchBtn} textStyle={styles.searchBtnText} onPress={this.props.search} />
             </View>
         );
     }
 }
-export default newButton;
+export default Search;
 
 const styles = {
     search: {
-        flex:1,
-        marginLeft:10,
+        flexDirection: 'row',
+        padding:10,
+    },
+    NewInput: {
         marginRight:10,
-        borderTopWidth:1,
-        borderColor:'#f00',
+        height:40,
+    },
+    searchBtn: {
+        width:80,
+        height:40,
+        backgroundColor:'#2795ee'
+    },
+    searchBtnText: {
+        color:'#fff'
     }
 }

@@ -15,6 +15,7 @@ import {strings} from './language/I18n.js';
 
 import Home from './views/Home.js';
 import MatchupExpo from './views/MatchupExpo.js';
+import MatchupExpoList from './views/MatchupExpoList.js';
 import MatchupExpoDetail from './views/MatchupExpoDetail.js';
 import My from './views/My.js';
 import Other from './views/Other.js';
@@ -112,10 +113,17 @@ var stackRoutes = {
             // header:null
         }
     },
+    MatchupExpoList: {
+        screen: MatchupExpoList,
+        navigationOptions: {
+            title: 'Matchup Expo List',
+            // header:null
+        }
+    },
     MatchupExpoDetail: {
         screen: MatchupExpoDetail,
         navigationOptions: {
-            title: '',
+            title: 'Matchup Expo',
             // header:null
         }
     },
