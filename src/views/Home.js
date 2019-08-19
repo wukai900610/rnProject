@@ -1,13 +1,15 @@
 import React, {Component}  from 'react';
 import {
   StyleSheet,
+  ScrollView,
   View,
 } from 'react-native';
-import { Drawer, Header, Left, Body, Button,Title,Icon } from 'native-base';
+import { Drawer, Header, Left, Body,Text, Button,Title,Icon } from 'native-base';
 import Util from '../libs/libs';
 import Layout  from '../components/Layout';
 import Banner from '../components/Banner';
 import MainSearch from '../components/Search';
+import Homebottom from '../components/Homebottom';
 import SideBar from '../components/SideBar';
 import NewButton from '../components/NewButton';
 
@@ -31,7 +33,7 @@ class App extends Component {
         const { navigation} = this.props;
         let keyword = this.mainSearch.newInput.state.text;
         // console.log(keyword)
-        keyword && navigation.navigate('MatchupExpoList',{keyword:keyword});
+        navigation.navigate('MatchupExpoList',{keyword:keyword});
     }
 
     componentDidMount(){
@@ -59,10 +61,16 @@ class App extends Component {
                             </Button>
                         </Left>
                         <Body style={{alignItems:'center'}}>
+                            <Text style={{color:'#fff'}}>联亚国际</Text>
                         </Body>
+                        <Left></Left>
                     </Header>
-                    <Banner domain={exhibition.domain} url='/api/b2bbanner'></Banner>
-                    <MainSearch title={strings('home.title')} placeholder={strings('home.mainSearchPlaceholder')} ref={(e) => {this.mainSearch = e;}} search={()=>{this.search()}} />
+                    <ScrollView>
+                        <Banner domain={exhibition.domain} url='/api/b2bbanner'></Banner>
+                        <MainSearch title={strings('home.title')} placeholder={strings('home.mainSearchPlaceholder')} ref={(e) => {this.mainSearch = e;}} search={()=>{this.search()}} />
+
+                        <Homebottom />
+                    </ScrollView>
                 </Drawer>
             </Layout>
         );

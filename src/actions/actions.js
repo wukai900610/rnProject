@@ -28,7 +28,7 @@ export function changeLan (data) {
         value: data
     }
 }
-
+/****************登录登出***************/
 // 登出
 export function logoutSuccess () {
     return {
@@ -47,5 +47,38 @@ export function loginFail () {
     return {
         type: 'LOGIN_FAIL',
         value: ''
+    }
+}
+/****************列表***************/
+// 列表刷新
+export function listRefresh (data,params) {
+    return {
+        type: 'LIST_REFRESH',
+        value: data,
+        view: params.view,
+    }
+}
+// 列表加载
+export function listLoad (data,params) {
+    return {
+        type: 'LIST_LOADING',
+        value: '',
+        view: params.view,
+    }
+}
+// 列表加载完成
+export function listLoadSuccess (data,params) {
+    return {
+        type: 'LIST_LOAD_SUCCESS',
+        value: data,
+        view: params.view,
+    }
+}
+// 列表加载失败
+export function listLoadFail (data,params) {
+    return {
+        type: 'LIST_LOAD_FAIL',
+        value: '',
+        view: params.view,
     }
 }

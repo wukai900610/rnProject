@@ -7,7 +7,7 @@ import {
     PixelRatio,
     Dimensions
 } from 'react-native';
-import { Drawer, Button,Title,Icon,Text, Spinner,Toast } from 'native-base';
+import { Drawer, Header,Right,Body,Button,Title,Icon,Text, Spinner,Toast } from 'native-base';
 
 import {connect} from 'react-redux';
 import {logoutSuccess} from '../actions/actions';
@@ -17,6 +17,8 @@ const {height, width} = Dimensions.get('window');
 import Util from '../libs/libs';
 import Layout  from '../components/Layout';
 import {strings} from '../language/I18n.js';
+
+const win = Dimensions.get('window');
 
 class App extends React.Component {
     constructor(props) {
@@ -165,7 +167,10 @@ class App extends React.Component {
         return (
             <Layout>
                 <ScrollView style={styles.serviceHallPage}>
-                    <Image source={require('../static/serviceHallPage.png')} style={styles.banner} />
+                    <Button style={styles.about} onPress={() => {navigation.navigate('About')}}>
+                        <Icon name='ios-information-circle' />
+                    </Button>
+                    <Image source={require('../static/serviceHallPage.jpg')} style={styles.banner} />
 
                     <View style={{marginLeft:5,marginRight:5}}>
                         <View style={styles.navLevel}>
@@ -248,10 +253,17 @@ const styles = {
     serviceHallPage: {
         backgroundColor:'#f7f7f7'
     },
+    about:{
+        position:'absolute',
+        right:10,
+        top:10,
+        backgroundColor:'#4c91d2',
+        zIndex:1
+    },
     banner:{
         marginBottom:10,
-        width:1920 / PixelRatio.get(),
-        height: 400 / PixelRatio.get()
+        width:win.width,
+        height:400*(win.width)/win.height,
     },
     navLevel:{
         flex:1,

@@ -1,7 +1,9 @@
 import React, {Component}  from 'react';
 import {
     StyleSheet,
-    View
+    View,
+    Image,
+    PixelRatio
 } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text, Spinner,Toast } from 'native-base';
 
@@ -18,6 +20,7 @@ class App extends React.Component {
 
         this.state={
             status:'',
+            bg:require('../static/bg.jpg')
         }
     }
 
@@ -77,15 +80,16 @@ class App extends React.Component {
     render() {
         return (
             <Layout>
+                <Image source={this.state.bg} style={styles.bg} />
                 <View style={styles.content}>
                     <Form style={{marginRight:15,marginBottom:10}}>
                         <Item>
-                            <Label style={{fontSize:13}}>{strings('login.LoginName')}</Label>
-                            <Input ref={(e) => {this.LoginName = e;}} />
+                            <Label style={{color:'#fff',fontSize:14}}>{strings('login.LoginName')}</Label>
+                            <Input style={{color:'#fff',fontSize:14}} ref={(e) => {this.LoginName = e;}} />
                         </Item>
                         <Item>
-                            <Label style={{fontSize:13}}>{strings('login.LoginPass')}</Label>
-                            <Input secureTextEntry={true} ref={(e) => {this.LoginPass = e;}} />
+                            <Label style={{color:'#fff',fontSize:14}}>{strings('login.LoginPass')}</Label>
+                            <Input style={{color:'#fff',fontSize:14}} secureTextEntry={true} ref={(e) => {this.LoginPass = e;}} />
                         </Item>
                     </Form>
                     <Button style={{marginBottom:10}} block light rounded onPress={()=>{this.login()}}>
@@ -107,7 +111,16 @@ const styles = StyleSheet.create({
     content:{
         marginLeft:10,
         marginRight:10,
+        position:'absolute',
+        left:0,
+        top:0,
+        right:0,
+        bottom:0,
         flex:1,
         justifyContent:'center'
     },
+    bg:{
+        width:1440 / PixelRatio.get(),
+        height: 2560 / PixelRatio.get(),
+    }
 });

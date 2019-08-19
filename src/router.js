@@ -3,7 +3,8 @@ import {
     Image,
     Text,
     StatusBar,
-    PixelRatio
+    PixelRatio,
+    Platform
 } from 'react-native';
 import {
     createStackNavigator,
@@ -110,14 +111,15 @@ var stackRoutes = {
         screen: Login,
         navigationOptions: {
             title: '登陆',
-            // header:null
+            header:()=>{
+                return Platform.OS === 'ios' && null
+            }
         }
     },
     MatchupExpoList: {
         screen: MatchupExpoList,
         navigationOptions: {
             title: 'Matchup Expo List',
-            // header:null
         }
     },
     MatchupExpoDetail: {
@@ -149,6 +151,9 @@ const StacksOverTabs = createStackNavigator(stackRoutes,{
         if(routeName == 'MatchupExpo'){
             StatusBar.setBackgroundColor('#efefef');
             StatusBar.setBarStyle('dark-content');
+        }else if(routeName == 'Login'){
+            StatusBar.setBackgroundColor('#010810');
+            StatusBar.setBarStyle('light-content');
         }else{
             StatusBar.setBackgroundColor('#324191');
             StatusBar.setBarStyle('light-content');
