@@ -72,6 +72,11 @@ export default {
             Inbox: 'Inbox',
         }
     },
+    settings:{
+        edit:'Edit Password',
+        reset:'Reset Password',
+        about:'About',
+    },
     about:{
         adress1:{
             text:'Jiangsu United Asia International Exhibition Co., Ltd',

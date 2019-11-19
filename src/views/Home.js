@@ -38,7 +38,7 @@ class App extends Component {
 
     componentDidMount(){
         const { navigation} = this.props;
-        // navigation.navigate('Login');
+        navigation.navigate('Settings');
     }
 
     render() {

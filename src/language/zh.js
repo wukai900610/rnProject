@@ -72,6 +72,11 @@ export default {
             Inbox: '收件箱',
         }
     },
+    settings:{
+        edit:'修改密码',
+        reset:'重置密码',
+        about:'关于我们',
+    },
     about:{
         adress1:{
             text:'江苏联亚国际展览有限公司',
