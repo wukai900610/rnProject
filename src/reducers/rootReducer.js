@@ -10,25 +10,25 @@ const initialState = {
     exhibitions:{
         'nigeriatex':{
             code: 'nt',
-            domain:'http://www.nigeriatex.com',
+            domain:'http://b2b.nigeriatex.com',
             logo: '/static/image/logo3.png',
             tel: '+86-25-84521101',
         },
         'autoequip-nigeria':{
             code: 'an',
-            domain:'http://www.autoequip-nigeria.com',
+            domain:'http://b2b.autoequip-nigeria.com',
             logo: '/static/image/logo5.png',
             tel: '+86-25-84521101',
         },
         'homeshow-colombia':{
             code: 'hc',
-            domain:'http://www.homeshow-colombia.com',
+            domain:'http://b2b.homeshow-colombia.com',
             logo: '/static/image/logo.png',
             tel: '+86-25-84521101',
         },
         'homeshow-nigeria':{
             code: 'hn',
-            domain:'http://www.homeshow-nigeria.com',
+            domain:'http://b2b.homeshow-nigeria.com',
             logo: '/static/image/logo4.png',
             tel: '+86-25-84521101',
         },

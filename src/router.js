@@ -30,9 +30,9 @@ const CreateTab = createMaterialTopTabNavigator({
         navigationOptions: (navigate) => ({
             tabBarLabel: (e) => {
                 if(e.focused){
-                    return (<Text style={{color:'#008ff2'}}>{strings('router.Home')}</Text>);
+                    return (<Text style={{color:'#008ff2',fontSize:12}}>{strings('router.Home')}</Text>);
                 }else{
-                    return (<Text style={{color:'#999'}}>{strings('router.Home')}</Text>);
+                    return (<Text style={{color:'#999',fontSize:12}}>{strings('router.Home')}</Text>);
                 }
             },
             tabBarIcon: ({tintColor, focused}) => {
@@ -45,7 +45,10 @@ const CreateTab = createMaterialTopTabNavigator({
     MatchupExpo: {
         screen: MatchupExpo,
         navigationOptions: (navigate) => ({
-            tabBarLabel: 'Matchup Expo',
+            // tabBarLabel: 'Matchup Expo',
+            tabBarLabel: (e) => {
+                return (<Text style={{color:'#999',fontSize:12}}>Matchup Expo</Text>);
+            },
             tabBarIcon: ({tintColor, focused}) => {
                 return (
                     <Image source={focused ? require('./static/serviceHall.png') : require('./static/serviceHall-outline.png')} style={styles.tabIco} />
@@ -58,9 +61,9 @@ const CreateTab = createMaterialTopTabNavigator({
         navigationOptions: (navigate) => ({
             tabBarLabel: (e) => {
                 if(e.focused){
-                    return (<Text style={{color:'#008ff2'}}>{strings('router.My')}</Text>);
+                    return (<Text style={{color:'#008ff2',fontSize:12}}>{strings('router.My')}</Text>);
                 }else{
-                    return (<Text style={{color:'#999'}}>{strings('router.My')}</Text>);
+                    return (<Text style={{color:'#999',fontSize:12}}>{strings('router.My')}</Text>);
                 }
             },
             tabBarIcon: ({tintColor, focused}) => {
