@@ -167,8 +167,8 @@ class App extends React.Component {
         return (
             <Layout>
                 <ScrollView style={styles.serviceHallPage}>
-                    <Button style={styles.about} onPress={() => {navigation.navigate('About')}}>
-                        <Icon name='ios-information-circle' />
+                    <Button style={styles.about} onPress={() => {navigation.navigate('Settings')}}>
+                        <Icon name='settings' />
                     </Button>
                     <Image source={require('../static/serviceHallPage.jpg')} style={styles.banner} />
 
