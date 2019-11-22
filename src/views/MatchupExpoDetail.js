@@ -1,7 +1,6 @@
 import React,{Component}  from 'react';
-import {View} from 'react-native';
-import { Container, Content, List, ListItem, Text, Spinner } from 'native-base';
-import NewButton  from '../components/NewButton';
+import {View,Image,Text} from 'react-native';
+import HTMLView from 'react-native-htmlview';
 import Util from '../libs/libs';
 
 class App extends React.Component {
@@ -9,6 +8,9 @@ class App extends React.Component {
         super(props);
 
         this.state = {
+            classData:{
+                Img:''
+            }
         };
     }
 
@@ -19,17 +21,25 @@ class App extends React.Component {
                 id: navigation.state.params.ID
             }
         }).then((response)=>{
-            this.classData = response.data[0]
-            console.log(this.classData);
+            this.setState({
+                classData:{
+                    ...response.data[0],
+                    Img:'http://b2b.nigeriatex.com' + response.data[0].Img
+                }
+            });
         })
     }
 
     render() {
-        let {navigation} = this.props;
-
+        // let {navigation} = this.props;
+        let {classData} = this.state;
         return (
             <View style={{flex:1}}>
-                <Text style={styles.title}>{navigation.state.params.title}</Text>
+                <Image style={styles.pic} source={{uri:classData.Img}}/>
+                <View style={styles.info}>
+                    <Text style={styles.Description}>Description:{classData.Description}</Text>
+                    <HTMLView value={classData.Summary} stylesheet={styles.article} />
+                </View>
             </View>
         );
     }
@@ -37,5 +47,22 @@ class App extends React.Component {
 export default App;
 
 const styles = {
+    pic:{
+        alignItems:'center',
+        height:400
+    },
+    info:{
+        flex:1,
+        marginTop:10,
+        marginBottom:10,
+        marginLeft:10,
+        marginRight:10,
+        backgroundColor:'#fff'
+    },
+    Description:{
+        lineHeight:20
+    },
+    article:{
 
+    }
 }

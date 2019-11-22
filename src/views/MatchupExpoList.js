@@ -24,7 +24,6 @@ class App extends React.Component {
     // 列表项渲染
     _renderItem = ({item}) => {
         return (
-
             <TouchableOpacity onPress={() => this._onPressItem(item)}>
                 <View style={styles.listItem}>
                     <Image style={styles.pic} source={{uri: 'http://b2b.nigeriatex.com' + item.Img}}/>

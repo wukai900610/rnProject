@@ -49,10 +49,9 @@ class App extends React.Component {
 
         const {dispatch,defaultEx,exhibitions} = this.props;
         let exhibition = Util.getExhibitionConf(defaultEx,exhibitions);
-        let url = exhibition.domain + '/api/WebUser/Login';
-        let params = {LoginName:'13770974621',LoginPass:'123123'};
+        let params = {LoginName:'13770974621',LoginPass:'111111'};
 
-        Util.ajax.post(url, params).then((response) => {
+        Util.ajax.post('/WebUser/Login', params).then((response) => {
             dispatch(loginSuccess(response.data));
             _this.setState({
                 status:'success',

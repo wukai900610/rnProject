@@ -136,9 +136,11 @@ var stackRoutes = {
     },
     MatchupExpoDetail: {
         screen: MatchupExpoDetail,
-        navigationOptions: {
-            title: 'Matchup Expo Detail',
-            // header:null
+        navigationOptions:({navigation})=>{
+            let params = navigation.state.params
+            return {
+                title:params.title
+            };
         }
     },
     About: {

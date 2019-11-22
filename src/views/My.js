@@ -114,9 +114,8 @@ class App extends React.Component {
         let _this = this;
         const {navigation,dispatch,defaultEx,exhibitions} = this.props;
         let exhibition = Util.getExhibitionConf(defaultEx,exhibitions);
-        let url = exhibition.domain + '/api/WebUser/Logout';
 
-        Util.ajax.get(url).then((response) => {
+        Util.ajax.get('/WebUser/Logout').then((response) => {
             dispatch(logoutSuccess());
             _this.setState({
                 status:'success',
