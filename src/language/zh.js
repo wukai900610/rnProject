@@ -21,7 +21,7 @@ export default {
     changeExhibition: '展会切换成功',
     home: {
         mainSearchPlaceholder: '请输入产品关键词',
-        title: '搜索',
+        search: '搜索',
         text1Title:'欢迎来到哥伦比亚国际家庭用品礼品展',
         text1:'哥伦比亚国际家庭用品礼品展Home Show Colombia，哥伦比亚目前唯一对中国企业开放的礼品及家庭用品专业B2B展，是中国企业开拓南美西语市场不可或缺的平台。按照全球供应链理念，与南美洲规模、影响力最大的礼品家庭用品批发展Feria Del Hogar同期同馆，打造一个国际性的B2B家庭用品Sourcing展Home Show Colombia，为中到大宗采购商打造一个专业的采购平台。哥伦比亚国际家庭用品礼品展，是中国品牌进入大宗拉美市场的理想之选。',
         text2Title:'精彩展会等你来',

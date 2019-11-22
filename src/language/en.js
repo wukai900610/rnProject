@@ -21,7 +21,7 @@ export default {
     changeExhibition: 'CHANGE SUCCESSFUL',
     home: {
         mainSearchPlaceholder: 'Please Enter Keyword',
-        title: 'Search',
+        search: 'Search',
         text1Title:'WELCOME TO HOME SHOW COLOMBIA',
         text1:'Latin America Home Show Colombia is one of the Home Show series exhibitions in Latin America. Building on worldwide business networks, Home Show Colombia aims to promote multilateral consumer goods trade since its establishment.',
         text2Title:'MAKE SURE YOU ARE HERE',

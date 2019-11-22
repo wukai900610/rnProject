@@ -61,13 +61,13 @@ class App extends Component {
                             </Button>
                         </Left>
                         <Body style={{alignItems:'center'}}>
-                            <Text style={{color:'#fff'}}>联亚国际</Text>
+                            <Text style={{fontSize:14,color:'#fff'}}>{strings('exhibitionInfo.'+ defaultEx +'.title')}</Text>
                         </Body>
                         <Left></Left>
                     </Header>
                     <ScrollView>
                         <Banner domain={exhibition.domain} url='/b2bbanner'></Banner>
-                        <MainSearch title={strings('home.title')} placeholder={strings('home.mainSearchPlaceholder')} ref={(e) => {this.mainSearch = e;}} search={()=>{this.search()}} />
+                        <MainSearch title={strings('home.search')} placeholder={strings('home.mainSearchPlaceholder')} ref={(e) => {this.mainSearch = e;}} search={()=>{this.search()}} />
 
                         <Homebottom />
                     </ScrollView>

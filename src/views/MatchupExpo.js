@@ -90,7 +90,6 @@ class App extends Component {
                     }
                 })
             })
-            console.log(level1);
             _this.setState({
                 category:level1
             });
