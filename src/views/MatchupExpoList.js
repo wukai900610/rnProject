@@ -16,8 +16,28 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
+        const { navigation} = this.props;
+        let params = navigation.state.params;
+        let myRequest = [{// 来自关键词
+            url:'/B2BKeyWords/Get',
+            payload:{
+                KeyWords: params.keyword,
+                type: 'product',
+                page: 1,
+                size: 10,
+            }
+        },{// 来自目录
+            url:'/B2BKeyWords/GetByCatelogID',
+            payload:{
+                CatelogID: params.ID,
+                CLevel: params.CLevel,
+                type: 'product',
+                page: 1,
+                size: 10,
+            }
+        }]
         this.state = {
-
+            myRequest:params.from == 'home' ? myRequest[0] : myRequest[1]
         };
     }
 
@@ -41,7 +61,9 @@ class App extends React.Component {
     // 列表项点击
     _onPressItem = (item) => {
         const { navigation} = this.props;
-        navigation.navigate('MatchupExpoDetail',{title:item.Name,ID:item.ID,type:navigation.state.params.type});
+        let {myRequest} = this.state;
+
+        navigation.navigate('MatchupExpoDetail',{title:item.Name,ID:item.ID,type:myRequest.payload.type});
     };
 
     componentDidMount(){
@@ -50,15 +72,11 @@ class App extends React.Component {
     }
 
     render() {
-        let params = {
-            KeyWords: '',
-            type: 'product',
-            page: 1,
-            size: 10,
-        }
+        let {myRequest} = this.state;
+
         return (
             <View style={{flex:1}}>
-                <CustomList url="/B2BKeyWords/Get" params={params} renderItem={this._renderItem} />
+                <CustomList url={myRequest.url} params={myRequest.payload} renderItem={this._renderItem} />
             </View>
         );
     }

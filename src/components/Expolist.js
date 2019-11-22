@@ -13,18 +13,33 @@ class App extends React.Component {
         };
     }
 
+    showNum(item){
+        if(item.num > 0){
+            return(
+                <Text style={{fontWeight:'bold',color:'#333'}}>{item.num}</Text>
+            )
+        }else{
+            return(
+                <Text style={{fontWeight:'bold',color:'#333'}}></Text>
+            )
+        }
+    }
+
     renderList(){
         let list = [];
         let { navigation } = this.props;
 
         this.props.data.children.map((item,index)=>{
-            list.push(<ListItem itemDivider key={index}>
+            list.push(<ListItem itemDivider key={index} onPress={()=>{
+                navigation.navigate('MatchupExpoList',{Name:item.Name,ID:item.ID,CLevel:item.CLevel})}}>
                 <Text style={{fontWeight:'bold',color:'#333'}}>{item.Name}</Text>
             </ListItem>);
 
             item.children.map((item2,index2)=>{
                 list.push(<ListItem key={index+'_'+index2}>
-                    <NewButton onPress={()=>navigation.navigate('MatchupExpoDetail',{params:{name:item2.Name}})} textStyle={{color:'#666'}} title={item2.Name}/>
+                    <NewButton onPress={()=>{
+                        navigation.navigate('MatchupExpoList',{Name:item2.Name,ID:item2.ID,CLevel:item2.CLevel})}} textStyle={{color:'#666'}} title={item2.Name}/>
+                        {this.showNum(item2)}
                 </ListItem>);
             });
         });
@@ -62,5 +77,4 @@ class App extends React.Component {
 export default App;
 
 const styles = {
-
 }

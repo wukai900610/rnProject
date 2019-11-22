@@ -33,7 +33,7 @@ class App extends Component {
         const { navigation} = this.props;
         let keyword = this.mainSearch.newInput.state.text;
         // console.log(keyword)
-        navigation.navigate('MatchupExpoList',{keyword:keyword,type:'product'});
+        navigation.navigate('MatchupExpoList',{keyword:keyword,from:'home'});
     }
 
     componentDidMount(){

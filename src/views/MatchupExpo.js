@@ -34,38 +34,63 @@ class App extends Component {
 
         let get = function (level) {
             return new Promise((resolve, reject)=>{
-                Util.ajax.get(exhibition.domain+'/api/B2BCategory/GetList',{params:{CLevel: level}}).then((response) => {
+                Util.ajax.get('/B2BCategory/GetListWithNum',{params:{CLevel: level}}).then((response) => {
                     resolve(response.data)
                 });
             })
         }
 
         Promise.all([get(1), get(2), get(3)]).then(function(values) {
-            let level1 = values[0]
-            let level2 = values[1]
-            let level3 = values[2]
+            let level1 = values[0].list
+            let num1 = values[0].num
+            let level2 = values[1].list
+            let num2 = values[1].num
+            let level3 = values[2].list
+            let num3 = values[2].num
             let tempData = []
 
+            // 匹配数据
+            for (var i in num1) {
+                level1.map(function(item) {
+                    if (item.ID == i) {
+                        item.num = num1[i]
+                    }
+                })
+            }
+            for (var i in num2) {
+                level2.map(function(item) {
+                    if (item.ID == i) {
+                        item.num = num2[i]
+                    }
+                })
+            }
+            for (var i in num3) {
+                level3.map(function(item) {
+                    if (item.ID == i) {
+                        item.num = num3[i]
+                    }
+                })
+            }
+
             // 三级目录合成到二级目录
-            level2.map((item)=>{
+            level2.map((item) => {
                 item.children = []
-                level3.map((item2)=>{
-                    if(item.ID == item2.ParentID){
+                level3.map((item2) => {
+                    if (item.ID == item2.ParentID) {
                         item.children.push(item2)
                     }
                 })
             })
-
             // 二级目录合成到一级目录
-            level1.map((item)=>{
+            level1.map((item) => {
                 item.children = []
-                level2.map((item2)=>{
-                    if(item.ID == item2.ParentID){
+                level2.map((item2) => {
+                    if (item.ID == item2.ParentID) {
                         item.children.push(item2)
                     }
                 })
             })
-
+            console.log(level1);
             _this.setState({
                 category:level1
             });
