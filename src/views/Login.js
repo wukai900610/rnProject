@@ -18,9 +18,14 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
+        const { navigation,defaultEx,exhibitions} = this.props;
+        let exhibition = Util.getExhibitionConf(defaultEx,exhibitions);
+        console.log(exhibition.logo);
         this.state={
             status:'',
-            bg:require('../static/bg.jpg')
+            bg:require('../static/loginBg.png'),
+            logo:exhibition.logo,
+            // logo:exhibition.logo,
         }
     }
 
@@ -80,6 +85,9 @@ class App extends React.Component {
         return (
             <Layout>
                 <Image source={this.state.bg} style={styles.bg} />
+                <View style={styles.logo}>
+                    <Image source={this.state.logo} />
+                </View>
                 <View style={styles.content}>
                     <Form style={{marginRight:15,marginBottom:10}}>
                         <Item>
@@ -121,5 +129,13 @@ const styles = StyleSheet.create({
     bg:{
         width:1440 / PixelRatio.get(),
         height: 2560 / PixelRatio.get(),
+    },
+    logo:{
+        position:'absolute',
+        top:'25%',
+        width:'100%',
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'column',
     }
 });

@@ -38,7 +38,7 @@ class App extends Component {
 
     componentDidMount(){
         const { navigation} = this.props;
-        // navigation.navigate('MatchupExpoList');
+        // navigation.navigate('Login');
     }
 
     render() {
