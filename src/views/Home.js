@@ -33,12 +33,12 @@ class App extends Component {
         const { navigation} = this.props;
         let keyword = this.mainSearch.newInput.state.text;
         // console.log(keyword)
-        navigation.navigate('MatchupExpoList',{keyword:keyword});
+        navigation.navigate('MatchupExpoList',{keyword:keyword,type:'product'});
     }
 
     componentDidMount(){
         const { navigation} = this.props;
-        navigation.navigate('Settings');
+        // navigation.navigate('MatchupExpoList');
     }
 
     render() {
@@ -66,7 +66,7 @@ class App extends Component {
                         <Left></Left>
                     </Header>
                     <ScrollView>
-                        <Banner domain={exhibition.domain} url='/api/b2bbanner'></Banner>
+                        <Banner domain={exhibition.domain} url='/b2bbanner'></Banner>
                         <MainSearch title={strings('home.title')} placeholder={strings('home.mainSearchPlaceholder')} ref={(e) => {this.mainSearch = e;}} search={()=>{this.search()}} />
 
                         <Homebottom />

@@ -24,7 +24,7 @@ import Login from './views/Login.js';
 import About from './views/About.js';
 
 // import Util from './libs/libs';
-const CreateTab = createMaterialTopTabNavigator({
+const Root = createMaterialTopTabNavigator({
     Home: {
         screen: Home,
         navigationOptions: (navigate) => ({
@@ -42,10 +42,13 @@ const CreateTab = createMaterialTopTabNavigator({
             }
         })
     },
-    MatchupExpo: {
+    MatchupExpo123: {
         screen: MatchupExpo,
         navigationOptions: (navigate) => ({
             // tabBarLabel: 'Matchup Expo',
+            tabBarOnPress:({navigation,defaultHandler})=>{
+                navigation.navigate('MatchupExpo');
+            },
             tabBarLabel: (e) => {
                 return (<Text style={{color:'#999',fontSize:12}}>Matchup Expo</Text>);
             },
@@ -96,7 +99,7 @@ const CreateTab = createMaterialTopTabNavigator({
 
 var stackRoutes = {
     Root: {
-        screen: CreateTab,
+        screen: Root,
         navigationOptions: {
             header: () => null,
         }
@@ -119,6 +122,12 @@ var stackRoutes = {
             }
         }
     },
+    MatchupExpo: {
+        screen: MatchupExpo,
+        navigationOptions: {
+            title: 'Matchup Expo',
+        }
+    },
     MatchupExpoList: {
         screen: MatchupExpoList,
         navigationOptions: {
@@ -128,7 +137,7 @@ var stackRoutes = {
     MatchupExpoDetail: {
         screen: MatchupExpoDetail,
         navigationOptions: {
-            title: 'Matchup Expo',
+            title: 'Matchup Expo Detail',
             // header:null
         }
     },
@@ -139,6 +148,7 @@ var stackRoutes = {
         }
     }
 };
+
 const StacksOverTabs = createStackNavigator(stackRoutes,{
     onTransitionEnd :(transitionProps,prevTransitionProps)=>{
         let routeName;

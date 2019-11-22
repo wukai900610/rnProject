@@ -27,7 +27,7 @@ class Banner extends React.Component {
 
     getData(){
         let _this = this;
-        Util.ajax.get(_this.props.domain+this.props.url).then((response) => {
+        Util.ajax.get(this.props.url).then((response) => {
             _this.setState({
                 banner:[{
                     src:_this.props.domain + response.data.Banner,

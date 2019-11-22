@@ -130,7 +130,7 @@ util.resetNavigation = (routeName)=>{
 }
 
 util.ajax = axios.create({
-    baseURL: '',
+    baseURL: 'http://b2b.nigeriatex.com/api',
     // timeout: 2000,
     // headers: {'content-type':'application/json;charset=UTF-8'},
     // paramsSerializer: function(params) {
@@ -144,14 +144,23 @@ util.ajax = axios.create({
 });
 
 util.ajax.interceptors.request.use(function (config) {
+    // console.log(config);
     let {defaultEx,exhibitions,lan} = STORE.getState().store;
     let exhibition = util.getExhibitionConf(defaultEx,exhibitions);
-    // 配置通用code
-    config.params = {
-        ...config.params,
-        code:exhibition.code,
-        lan:lan
+    if(config.method == 'get'){
+        config.params = {
+            ...config.params,
+            code:exhibition.code,
+            lan:lan
+        }
+    }else{
+        config.data = {
+            ...config.data,
+            code:exhibition.code,
+            lan:lan
+        }
     }
+
     return config;
 }, function (error) {
     return Promise.reject(error);

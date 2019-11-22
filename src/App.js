@@ -7,6 +7,9 @@ import Router from './router'
 
 import { BackHandler, ToastAndroid, Platform } from 'react-native';
 
+// 关闭黄色警告
+console.disableYellowBox = true
+
 export default class App extends Component {
     // onBackAndroid = () => {
     //     if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {

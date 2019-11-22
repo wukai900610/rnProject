@@ -6,93 +6,102 @@
  * @flow
  */
 
-import React, {Component}  from 'react';
+import React, {
+    Component
+} from 'react';
 import {
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  RefreshControl,
+    StyleSheet,
+    FlatList,
+    View,
+    Text,
+    ActivityIndicator
 } from 'react-native';
-import Layout  from '../components/Layout';
+import Layout from '../components/Layout';
+import Util from '../libs/libs';
 
 export default class App extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            page:20,
-            list:{
-                data:[],
-            }
+            data: [],
+            params:this.props.params,
+            status: '',
         };
     }
 
-    // 列表刷新
-    _onRefresh = () => {
+    getData() {
         let _this = this;
+
         _this.setState({
-            ..._this.state,
-            list:{
-                ..._this.state.list,
-                refreshing:true,
-            }
-        });
-        setTimeout(()=>{
-            _this.setState({
-                ..._this.state,
-                list:{
-                    ..._this.state.list,
-                    refreshing:false,
-                    data:_this.getData()
+            status: 'loading',
+        },()=>{
+            Util.ajax.get(_this.props.url, {
+                params:this.state.params
+            }).then((response) => {
+                if(response.data.length > 0){
+                    let page = _this.state.params.page + 1;
+                    if(response.data.length < _this.state.size){
+                        _this.setState({
+                            status:'noData',
+                            data:_this.state.data.concat(response.data),
+                            params:{
+                                ..._this.state.params,
+                                page:page
+                            }
+                        });
+                    }else{
+                        _this.setState({
+                            status:'success',
+                            data:_this.state.data.concat(response.data),
+                            params:{
+                                ..._this.state.params,
+                                page:page
+                            }
+                        });
+                    }
+                }else{
+                    _this.setState({
+                        status:'noData',
+                    });
                 }
-            },()=>{
-                console.log(this.state.list)
-                });
-        },2000);
-    };
-    // 列表加载更多
-    _loadMore = () => {
-        console.log('_loadMore')
-    };
-
-    // 列表项点击
-    _onPressItem = (id: string) => {
-        console.log(id)
-    };
-
-    // 列表项渲染
-    _renderItem = ({item}) => {
-        return (
-            <View style={styles.listItem} onPress={this._onPressItem}>
-                <View style={styles.listItemBox}>
-                    <Text>{item.id}---{item.title}</Text>
-                </View>
-            </View>
-        )
-    };
-
-    componentDidMount(){
-        // 初始化数据
-        this.setState({
-            ...this.state,
-            list:{
-                ...this.state.list,
-                data:this.getData()
-            }
-        })
+            });
+        });
     }
 
-    getData(){
-        let data = [];
-        for(let i =0;i<22;i++){
-            let item = {
-                title:'index'+i,
-                id:'id'+i
-            };
-            data.push(item);
-        }
+    // 列表加载更多
+    _loadMore = () => {
+        let _this = this;
 
-        return data;
+        if(_this.state.status == '' || _this.state.status == 'success'){
+            _this.getData();
+        }
+    };
+
+    _renderFooter(){
+        if(this.state.status == 'loading') {
+            return (
+                <View style={{paddingTop:10,alignItems:'center'}}>
+                    <ActivityIndicator />
+                    <Text style={{fontSize:14,marginTop:5,marginBottom:5,}}>正在加载更多数据...</Text>
+                </View>
+            );
+        }else if(this.state.status == 'noData'){
+            return (
+                <View style={{paddingTop:10,alignItems:'center'}}>
+                    <Text style={{fontSize:14,marginTop:5,marginBottom:5,}}>
+                        没有更多数据了
+                    </Text>
+                </View>
+            );
+        }else{
+            return <View></View>;
+        }
+    }
+
+    componentDidMount() {
+        // 初始化数据
+        this._loadMore()
     }
 
     render() {
@@ -101,24 +110,14 @@ export default class App extends Component {
             <Layout>
                 <FlatList
                 style={styles.scrollView}
-                data={this.state.list.data}
+                data={this.state.data}
                 extraData={this.state}
-                keyExtractor={ (item, index) => item.id}
-                refreshing={true}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.list.refreshing}
-                        colors={['#ff0000', '#00ff00', '#0000ff']}
-                        progressBackgroundColor={"#ffffff"}
-                        onRefresh={() => {
-                            this._onRefresh();
-                        }}
-                    />
-                }
-                renderItem={this._renderItem}
+                keyExtractor={ (item, index) => item.ID}
+                renderItem={this.props.renderItem}
                 onEndReached={this._loadMore}
-                onEndReachedThresholdnumber ={0.25}
-                ItemSeparatorComponent={()=>(<View style={{height: 1, backgroundColor: '#f00'}}/>)}
+                onEndReachedThresholdnumber ={0.1}
+                ListFooterComponent={this._renderFooter.bind(this)}
+                ItemSeparatorComponent={()=>(<View style={{height: 1, backgroundColor: '#f1f1f1'}}/>)}
                 />
             </Layout>
         );
@@ -127,17 +126,6 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
     scrollView: {
-        flex:1,
-        backgroundColor: '#ececec',
-    },
-    listItem:{
-        paddingLeft:10,
-        paddingRight:10,
-        height:30,
-        backgroundColor:'#ccc',
-        justifyContent :'center',
-    },
-    listItemBox:{
-        fontSize:22
+        flex: 1
     }
 });
