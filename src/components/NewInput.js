@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text,TextInput, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Util from '../libs/libs';
@@ -109,13 +109,15 @@ class NewInput extends React.Component {
     }
 
     renderClearTextBtn(){
-        if(this.props.showClearTextBtn != false){
-            if(this.state.text.length > 0){
-                return (
-                    <TouchableOpacity style={styles.clearText} onPress={()=>{this._clearText()}}>
-                        <Ionicons color='#666' name='ios-trash' size={20}/>
-                    </TouchableOpacity>
-                )
+        if(this.props.editable != false){
+            if(this.props.showClearTextBtn != false){
+                if(this.state.text.length > 0){
+                    return (
+                        <TouchableOpacity style={styles.clearText} onPress={()=>{this._clearText()}}>
+                            <Ionicons color='#666' name='ios-trash' size={20}/>
+                        </TouchableOpacity>
+                    )
+                }
             }
         }
 
@@ -166,10 +168,11 @@ class NewInput extends React.Component {
 
     render() {
         let {status} = this.state;
-        let {round} = this.props;
+        let {round,label} = this.props;
 
         return (
             <View style={[styles.newInput,this.props.style,status=='fail'?styles.fail:'',round?styles.round:'']}>
+                <Text style={styles.label}>{label}</Text>
                 <TextInput underlineColorAndroid="transparent" autoCapitalize="none" {...this.props} style={styles.inputText} value={this.state.text} autoCorrect={false} onChangeText={(text) => {this.setText(text)}} />
 
                 {this.renderClearTextBtn()}
@@ -183,11 +186,12 @@ export default NewInput;
 const styles = {
     newInput: {
         flex:1,
-        height: 30,
+        height: 45,
         flexDirection:'row',
-        borderWidth:1,
-        borderColor:'#ccc',
-        backgroundColor:'#fff',
+        alignItems:'center',
+        borderBottomWidth:1,
+        borderColor:'#f1f1f1',
+        backgroundColor:'#fefefe',
     },
     clearText:{
         justifyContent: 'center',
@@ -196,6 +200,12 @@ const styles = {
     status:{
         justifyContent: 'center',
         marginRight:10
+    },
+    label:{
+        paddingLeft:10,
+        // paddingRight:5,
+        color:'#666',
+        fontSize:15
     },
     inputText: {
         flex:1,
