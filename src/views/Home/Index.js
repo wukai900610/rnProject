@@ -38,7 +38,9 @@ class App extends Component {
 
     componentDidMount(){
         const { navigation} = this.props;
-        // navigation.navigate('Login');
+        setTimeout(function () {
+            navigation.navigate('Login');
+        }, 250);
     }
 
     render() {
@@ -53,7 +55,7 @@ class App extends Component {
                     openDrawerOffset={0.3}
                     panCloseMask={0.3}
                     tapToClose={true}
-                    onClose={() => this.closeDrawer()} >
+                    onClose={() => this.closeDrawer()}>
                     <Header>
                         <Left>
                             <Button transparent onPress={() => this.openDrawer()}>

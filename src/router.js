@@ -14,14 +14,16 @@ import {
 import STORE from './store/store';
 import {strings} from './language/I18n.js';
 
-import Home from './views/Home.js';
-import MatchupExpo from './views/MatchupExpo.js';
-import MatchupExpoList from './views/MatchupExpoList.js';
-import MatchupExpoDetail from './views/MatchupExpoDetail.js';
-import My from './views/My.js';
-import Other from './views/Other.js';
+import Home from './views/Home/Index.js';
+import UserCenter from './views/Home/UserCenter.js';
+import MatchupExpo from './views/MatchupExpo/Index.js';
+import MatchupExpoList from './views/MatchupExpo/List.js';
+import MatchupExpoDetail from './views/MatchupExpo/Detail.js';
+
 import Login from './views/Login.js';
 import About from './views/About.js';
+import Settings from './views/UserCenter/Settings.js';
+import Other from './views/UserCenter/Other.js';
 
 // import Util from './libs/libs';
 const Root = createMaterialTopTabNavigator({
@@ -59,8 +61,8 @@ const Root = createMaterialTopTabNavigator({
             }
         })
     },
-    My: {
-        screen: My,
+    UserCenter: {
+        screen: UserCenter,
         navigationOptions: (navigate) => ({
             tabBarLabel: (e) => {
                 if(e.focused){
@@ -111,6 +113,15 @@ var stackRoutes = {
         },
         navigationOptions: {
             title: '其他',
+        }
+    },
+    Settings: {
+        screen: Settings,
+        params:{
+            auth:true,
+        },
+        navigationOptions: {
+            title: '设置',
         }
     },
     Login: {

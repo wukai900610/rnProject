@@ -20,7 +20,7 @@ class App extends React.Component {
 
         const { navigation,defaultEx,exhibitions} = this.props;
         let exhibition = Util.getExhibitionConf(defaultEx,exhibitions);
-        console.log(exhibition.logo);
+        // console.log(exhibition.logo);
         this.state={
             status:'',
             bg:require('../static/loginBg.png'),
@@ -55,6 +55,9 @@ class App extends React.Component {
         const {dispatch,defaultEx,exhibitions} = this.props;
         let exhibition = Util.getExhibitionConf(defaultEx,exhibitions);
         let params = {LoginName:'13770974621',LoginPass:'111111'};
+
+        // input值
+        // console.log(this.LoginName._root._lastNativeText);
 
         Util.ajax.post('/WebUser/Login', params).then((response) => {
             dispatch(loginSuccess(response.data));

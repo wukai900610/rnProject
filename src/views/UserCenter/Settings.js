@@ -7,7 +7,7 @@
  */
 
 import React,{Component}  from 'react';
-import { Container, Header, Content, List, ListItem, Text, Separator } from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, TouchableOpacity } from 'native-base';
 import Layout  from '../components/Layout';
 
 import {strings} from '../language/I18n.js';
@@ -18,6 +18,7 @@ export default class App extends Component {
     }
 
     render() {
+        const { navigation } = this.props;
         return (
             <Layout>
                 <Content>
@@ -27,7 +28,7 @@ export default class App extends Component {
                     <ListItem>
                         <Text>{strings('settings.reset')}</Text>
                     </ListItem>
-                    <ListItem last>
+                    <ListItem onPress={()=>{navigation.navigate('About')}} last>
                         <Text>{strings('settings.about')}</Text>
                     </ListItem>
                 </Content>
