@@ -2,7 +2,7 @@ import React,{Fragment,Component}  from 'react';
 import {
   View,
 } from 'react-native';
-import { Content,Button,Input,Text } from 'native-base';
+import { Content,Button,Input,Text,Toast } from 'native-base';
 import Layout  from '../../components/Layout';
 
 import {strings} from '../../language/I18n.js';
@@ -13,33 +13,45 @@ import NewInput from '../../components/NewInput';
 export default class App extends Component {
     constructor(props) {
         super(props);
+        let {navigation} = this.props;
 
         this.inputs = {}
         this.state = {
-            editable:false,
+            editable:navigation.state.params.id ? false : true,
             tableData:{},
         }
     }
 
     renderSubmit(){
-        if(this.state.editable){
-            return (
-                <Fragment>
-                    <Button style={{marginBottom:10}} block light onPress={()=>{this.setState({editable:false})}}>
-                        <Text>取消</Text>
+        let {navigation} = this.props;
+
+        if(navigation.state.params.id){
+            if(this.state.editable){
+                return (
+                    <Fragment>
+                        <Button style={{marginBottom:10}} block light onPress={()=>{this.setState({editable:false})}}>
+                            <Text>取消</Text>
+                        </Button>
+                        <Button block info onPress={()=>{this.submit()}}>
+                            <Text>提交</Text>
+                        </Button>
+                    </Fragment>
+                )
+            }else{
+                return (
+                    <Button block info onPress={()=>{this.setState({editable:true})}}>
+                        <Text>修改</Text>
                     </Button>
-                    <Button block info onPress={()=>{this.submit()}}>
-                        <Text>提交</Text>
-                    </Button>
-                </Fragment>
-            )
+                )
+            }
         }else{
             return (
-                <Button block info onPress={()=>{this.setState({editable:true})}}>
-                    <Text>修改</Text>
+                <Button block info onPress={()=>{this.submit()}}>
+                    <Text>提交</Text>
                 </Button>
             )
         }
+
     }
 
     submit(){
@@ -58,14 +70,18 @@ export default class App extends Component {
             url: '/WebOrderExhi',
             data: form
         }).then((response)=>{
-
+            navigation.goBack();
+            Toast.show({
+                text: navigation.state.params.id ? '修改成功' : '添加成功',
+                position:'top',
+                type:'success'
+            })
         })
     }
 
     componentDidMount(){
         let _this = this;
         const { navigation } = this.props;
-
         // 公司展会列表
         if(navigation.state.params.id){
             Util.ajax({
@@ -85,6 +101,7 @@ export default class App extends Component {
     render() {
         const { navigation } = this.props;
         const { tableData,editable } = this.state;
+
         return (
             <Layout>
                 <Content>

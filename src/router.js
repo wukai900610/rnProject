@@ -45,7 +45,7 @@ const Root = createMaterialTopTabNavigator({
             }
         })
     },
-    MatchupExpo123: {
+    MatchupExpoRoot: {
         screen: MatchupExpo,
         navigationOptions: (navigate) => ({
             // tabBarLabel: 'Matchup Expo',
