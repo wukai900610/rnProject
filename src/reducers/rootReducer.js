@@ -36,7 +36,9 @@ const initialState = {
         //
         // }
     },
-    userInfo:{},
+    User:{},
+    Ticket:'',
+    isExhibitor:'',
     homePage:{
         isLoading:false,
         status:'',
@@ -50,9 +52,9 @@ let store = (state = initialState,action)=>{
     }else if (action.type === 'CHANGE_LAN') {
         return {...state,lan:action.value}
     }else if (action.type === 'LOGIN_SUCCESS') {
-        return {...state,userInfo:action.value}
+        return {...state,...action.value}
     }else if (action.type === 'LOGIN_FAIL' || action.type === 'LOGINOUT_SUCCESS') {
-        return {...state,userInfo:{}}
+        return {...state,userInfo:{},Ticket:'',isExhibitor:''}
     }
     return state;
 }

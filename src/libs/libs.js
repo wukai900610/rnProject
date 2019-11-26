@@ -145,7 +145,8 @@ util.ajax = axios.create({
 
 util.ajax.interceptors.request.use(function (config) {
     // console.log(config);
-    let {defaultEx,exhibitions,lan} = STORE.getState().store;
+    let {defaultEx,exhibitions,lan,Ticket} = STORE.getState().store;
+    config.headers['Authorization'] = Ticket
     let exhibition = util.getExhibitionConf(defaultEx,exhibitions);
     if(config.method == 'get'){
         config.params = {

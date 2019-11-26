@@ -214,8 +214,8 @@ function checkAuth(routeName){
 const defaultGetStateForAction = StacksOverTabs.router.getStateForAction;
 StacksOverTabs.router.getStateForAction = (action, state) => {
     if(checkAuth(action.routeName)){//拦截判断
-        let {userInfo} = STORE.getState().store;
-        if(userInfo.Ticket){//已经登录
+        let {Ticket} = STORE.getState().store;
+        if(Ticket){//已经登录
             return defaultGetStateForAction(action, state);
         }else{// 跳转登录页
             this.routes = [

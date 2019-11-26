@@ -35,36 +35,36 @@ class App extends React.Component {
             navLevel2:[
                 {
                     title:'My.ManageCompanies.Info',
-                    route:'jbxx',
+                    route:'About',
                     ico:require('../../static/serviceHallPageIco4.png')
                 },
                 {
                     title:'My.ManageCompanies.Add',
-                    route:'jbxx',
+                    route:'About',
                     ico:require('../../static/serviceHallPageIco4.png')
                 }
             ],
             navLevel3:[
                 {
                     title:'My.ManageProducts.All',
-                    route:'jbxx',
+                    route:'About',
                     ico:require('../../static/serviceHallPageIco4.png')
                 },
                 {
                     title:'My.ManageProducts.Add',
-                    route:'jbxx',
+                    route:'About',
                     ico:require('../../static/serviceHallPageIco4.png')
                 }
             ],
             navLevel4:[
                 {
                     title:'My.ManageOffers.All',
-                    route:'jbxx',
+                    route:'About',
                     ico:require('../../static/serviceHallPageIco4.png')
                 },
                 {
                     title:'My.ManageOffers.Add',
-                    route:'jbxx',
+                    route:'About',
                     ico:require('../../static/serviceHallPageIco4.png')
                 }
             ],
@@ -102,8 +102,7 @@ class App extends React.Component {
 
     goToPage(detailItem){
         const { navigation } = this.props;
-console.log(detailItem);
-        // navigation.navigate(detailItem.route);
+        navigation.navigate(detailItem.route);
     }
 
     renderNavLevel(data){
@@ -121,8 +120,8 @@ console.log(detailItem);
     }
 
     renderLogoutBtn(){
-        const { userInfo } = this.props;
-        if(userInfo.Ticket){
+        const {Ticket } = this.props;
+        if(Ticket){
             return (<Button style={{marginBottom:10}} block danger rounded onPress={()=>{this.logout()}}>
                 {this.state.status == 'loading' && (<Spinner color='#666' size="small" />)}
                 <Text>{strings('logout.btn')}</Text>
