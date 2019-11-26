@@ -8,9 +8,9 @@
 
 import React,{Component}  from 'react';
 import { Container, Header, Content, List, ListItem, Text, TouchableOpacity } from 'native-base';
-import Layout  from '../components/Layout';
+import Layout  from '../../components/Layout';
 
-import {strings} from '../language/I18n.js';
+import {strings} from '../../language/I18n.js';
 
 export default class App extends Component {
     constructor(props) {

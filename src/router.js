@@ -22,6 +22,7 @@ import MatchupExpoDetail from './views/MatchupExpo/Detail.js';
 
 import Login from './views/Login.js';
 import About from './views/About.js';
+import Abroad from './views/UserCenter/Abroad.js';
 import Settings from './views/UserCenter/Settings.js';
 import Other from './views/UserCenter/Other.js';
 
@@ -106,33 +107,6 @@ var stackRoutes = {
             header: () => null,
         }
     },
-    Other: {
-        screen: Other,
-        params:{
-            auth:true,
-        },
-        navigationOptions: {
-            title: '其他',
-        }
-    },
-    Settings: {
-        screen: Settings,
-        params:{
-            auth:true,
-        },
-        navigationOptions: {
-            title: '设置',
-        }
-    },
-    Login: {
-        screen: Login,
-        navigationOptions: {
-            title: '登陆',
-            header:()=>{
-                return Platform.OS === 'ios' && null
-            }
-        }
-    },
     MatchupExpo: {
         screen: MatchupExpo,
         navigationOptions: {
@@ -152,6 +126,42 @@ var stackRoutes = {
             return {
                 title:params.title
             };
+        }
+    },
+    Abroad: {
+        screen: Abroad,
+        params:{
+            auth:true,
+        },
+        navigationOptions: {
+            title: '报名信息',
+        }
+    },
+    Settings: {
+        screen: Settings,
+        params:{
+            auth:true,
+        },
+        navigationOptions: {
+            title: '设置',
+        }
+    },
+    Other: {
+        screen: Other,
+        params:{
+            auth:true,
+        },
+        navigationOptions: {
+            title: '其他',
+        }
+    },
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            title: '登陆',
+            header:()=>{
+                return Platform.OS === 'ios' && null
+            }
         }
     },
     About: {

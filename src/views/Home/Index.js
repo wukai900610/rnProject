@@ -5,15 +5,15 @@ import {
   View,
 } from 'react-native';
 import { Drawer, Header, Left, Body,Text, Button,Title,Icon } from 'native-base';
-import Util from '../libs/libs';
-import Layout  from '../components/Layout';
-import Banner from '../components/Banner';
-import MainSearch from '../components/Search';
-import Homebottom from '../components/Homebottom';
-import SideBar from '../components/SideBar';
-import NewButton from '../components/NewButton';
+import Util from '../../libs/libs';
+import Layout  from '../../components/Layout';
+import Banner from '../../components/Banner';
+import MainSearch from '../../components/Search';
+import Homebottom from '../../components/Homebottom';
+import SideBar from '../../components/SideBar';
+import NewButton from '../../components/NewButton';
 
-import {strings} from '../language/I18n.js';
+import {strings} from '../../language/I18n.js';
 
 import {connect} from 'react-redux';
 
@@ -33,7 +33,7 @@ class App extends Component {
         const { navigation} = this.props;
         let keyword = this.mainSearch.newInput.state.text;
         // console.log(keyword)
-        navigation.navigate('MatchupExpoList',{keyword:keyword,from:'home'});
+        // navigation.navigate('MatchupExpoList',{keyword:keyword,from:'home'});
     }
 
     componentDidMount(){

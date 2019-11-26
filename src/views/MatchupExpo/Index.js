@@ -12,9 +12,9 @@ import {
 } from 'react-native';
 import { Container, Header,Left,Body,Right,Title, } from 'native-base';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import Util from '../libs/libs';
-import Layout  from '../components/Layout';
-import Expolist  from '../components/Expolist';
+import Util from '../../libs/libs';
+import Layout  from '../../components/Layout';
+import Expolist  from '../../components/Expolist';
 import {connect} from 'react-redux';
 
 class App extends Component {

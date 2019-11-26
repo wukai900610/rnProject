@@ -9,8 +9,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import CustomList  from '../components/List';
-import Util from '../libs/libs';
+import CustomList  from '../../components/List';
+import Util from '../../libs/libs';
 
 class App extends React.Component {
     constructor(props) {

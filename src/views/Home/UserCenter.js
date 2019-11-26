@@ -10,13 +10,13 @@ import {
 import { Drawer, Header,Right,Body,Button,Title,Icon,Text, Spinner,Toast } from 'native-base';
 
 import {connect} from 'react-redux';
-import {logoutSuccess} from '../actions/actions';
+import {logoutSuccess} from '../../actions/actions';
 
 const {height, width} = Dimensions.get('window');
 
-import Util from '../libs/libs';
-import Layout  from '../components/Layout';
-import {strings} from '../language/I18n.js';
+import Util from '../../libs/libs';
+import Layout  from '../../components/Layout';
+import {strings} from '../../language/I18n.js';
 
 const win = Dimensions.get('window');
 
@@ -28,73 +28,73 @@ class App extends React.Component {
             navLevel1:[
                 {
                     title:'My.ExhibitionManagement.Info',
-                    type:'bmxx',
-                    ico:require('../static/serviceHallPageIco2.png')
+                    route:'Abroad',
+                    ico:require('../../static/serviceHallPageIco2.png')
                 }
             ],
             navLevel2:[
                 {
                     title:'My.ManageCompanies.Info',
-                    type:'jbxx',
-                    ico:require('../static/serviceHallPageIco4.png')
+                    route:'jbxx',
+                    ico:require('../../static/serviceHallPageIco4.png')
                 },
                 {
                     title:'My.ManageCompanies.Add',
-                    type:'jbxx',
-                    ico:require('../static/serviceHallPageIco4.png')
+                    route:'jbxx',
+                    ico:require('../../static/serviceHallPageIco4.png')
                 }
             ],
             navLevel3:[
                 {
                     title:'My.ManageProducts.All',
-                    type:'jbxx',
-                    ico:require('../static/serviceHallPageIco4.png')
+                    route:'jbxx',
+                    ico:require('../../static/serviceHallPageIco4.png')
                 },
                 {
                     title:'My.ManageProducts.Add',
-                    type:'jbxx',
-                    ico:require('../static/serviceHallPageIco4.png')
+                    route:'jbxx',
+                    ico:require('../../static/serviceHallPageIco4.png')
                 }
             ],
             navLevel4:[
                 {
                     title:'My.ManageOffers.All',
-                    type:'jbxx',
-                    ico:require('../static/serviceHallPageIco4.png')
+                    route:'jbxx',
+                    ico:require('../../static/serviceHallPageIco4.png')
                 },
                 {
                     title:'My.ManageOffers.Add',
-                    type:'jbxx',
-                    ico:require('../static/serviceHallPageIco4.png')
+                    route:'jbxx',
+                    ico:require('../../static/serviceHallPageIco4.png')
                 }
             ],
             navLevel5:[
                 {
                     title:'My.ManageMeetings.New',
-                    type:'task',
-                    ico:require('../static/serviceHallPageIco5.png')
+                    route:'Other',
+                    ico:require('../../static/serviceHallPageIco5.png')
                 },
                 {
                     title:'My.ManageMeetings.Replied',
-                    type:'task',
-                    ico:require('../static/serviceHallPageIco5.png')
+                    route:'Other',
+                    ico:require('../../static/serviceHallPageIco5.png')
                 },
                 {
                     title:'My.ManageMeetings.Invitations',
-                    type:'task',
-                    ico:require('../static/serviceHallPageIco5.png')
+                    route:'Other',
+                    ico:require('../../static/serviceHallPageIco5.png')
                 }
             ],
             navLevel6:[
                 {
                     title:'My.ManageInquiries.Sent',
-                    type:'task',
-                    ico:require('../static/serviceHallPageIco5.png')
+                    route:'Other',
+                    ico:require('../../static/serviceHallPageIco5.png')
                 },
                 {
                     title:'My.ManageInquiries.Inbox',
-                    type:'task',
-                    ico:require('../static/serviceHallPageIco5.png')
+                    route:'Other',
+                    ico:require('../../static/serviceHallPageIco5.png')
                 }
             ]
         };
@@ -102,8 +102,32 @@ class App extends React.Component {
 
     goToPage(detailItem){
         const { navigation } = this.props;
+console.log(detailItem);
+        // navigation.navigate(detailItem.route);
+    }
 
-        navigation.navigate('Other');
+    renderNavLevel(data){
+        let navLevelArr=[];
+        data.map((item,index)=>{
+            navLevelArr.push(
+                <TouchableOpacity style={styles.navItem} key={index} onPress={()=>{this.goToPage(item)}}>
+                    <Image source={item.ico} style={styles.navImg} />
+                    <Text style={{fontSize:12}}>{strings(item.title)}</Text>
+                </TouchableOpacity>
+            )
+        });
+
+        return navLevelArr;
+    }
+
+    renderLogoutBtn(){
+        const { userInfo } = this.props;
+        if(userInfo.Ticket){
+            return (<Button style={{marginBottom:10}} block danger rounded onPress={()=>{this.logout()}}>
+                {this.state.status == 'loading' && (<Spinner color='#666' size="small" />)}
+                <Text>{strings('logout.btn')}</Text>
+            </Button>)
+        }
     }
 
     logout(){
@@ -136,30 +160,6 @@ class App extends React.Component {
         });
     }
 
-    renderLogoutBtn(){
-        const { userInfo } = this.props;
-        if(userInfo.Ticket){
-            return (<Button style={{marginBottom:10}} block danger rounded onPress={()=>{this.logout()}}>
-                {this.state.status == 'loading' && (<Spinner color='#666' size="small" />)}
-                <Text>{strings('logout.btn')}</Text>
-            </Button>)
-        }
-    }
-
-    renderNavLevel(data){
-        let navLevelArr=[];
-        data.map((item,index)=>{
-            navLevelArr.push(
-                <TouchableOpacity style={styles.navItem} key={index} onPress={()=>{this.goToPage(item)}}>
-                    <Image source={item.ico} style={styles.navImg} />
-                    <Text style={{fontSize:12}}>{strings(item.title)}</Text>
-                </TouchableOpacity>
-            )
-        });
-
-        return navLevelArr;
-    }
-
     render() {
         const { navigation } = this.props;
         let {navLevel1,navLevel2,navLevel3,navLevel4,navLevel5,navLevel6} = this.state;
@@ -169,7 +169,7 @@ class App extends React.Component {
                     <Button style={styles.about} onPress={() => {navigation.navigate('Settings')}}>
                         <Icon name='settings' />
                     </Button>
-                    <Image source={require('../static/serviceHallPage.jpg')} style={styles.banner} />
+                    <Image source={require('../../static/serviceHallPage.jpg')} style={styles.banner} />
 
                     <View style={{marginLeft:5,marginRight:5}}>
                         <View style={styles.navLevel}>

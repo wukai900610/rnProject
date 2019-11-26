@@ -12,7 +12,7 @@ import {
   View,
   Text,
 } from 'react-native';
-import Layout  from '../components/Layout';
+import Layout  from '../../components/Layout';
 
 export default class App extends Component {
     constructor(props) {

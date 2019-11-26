@@ -1,7 +1,7 @@
 import React,{Component}  from 'react';
 import {View,Image,Text} from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import Util from '../libs/libs';
+import Util from '../../libs/libs';
 
 class App extends React.Component {
     constructor(props) {
