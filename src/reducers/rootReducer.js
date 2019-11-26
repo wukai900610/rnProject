@@ -1,4 +1,6 @@
 import {combineReducers} from 'redux'
+
+import Util from '../libs/libs';
 // import homePage from './homePage'
 // export default combineReducers({
 //   homePage
@@ -46,14 +48,20 @@ const initialState = {
         noData:false
     },
 }
+
 let store = (state = initialState,action)=>{
     if (action.type === 'CHANGE_EXHIBITION') {
         return {...state,defaultEx:action.value}
     }else if (action.type === 'CHANGE_LAN') {
         return {...state,lan:action.value}
     }else if (action.type === 'LOGIN_SUCCESS') {
+        // console.log(action.value.Ticket);
+        Util.setStore('Ticket',action.value.Ticket)
+        Util.setStore('User',action.value.User)
         return {...state,...action.value}
     }else if (action.type === 'LOGIN_FAIL' || action.type === 'LOGINOUT_SUCCESS') {
+        Util.setStoreDate('Ticket','')
+        Util.setStoreDate('User',{})
         return {...state,userInfo:{},Ticket:'',isExhibitor:''}
     }
     return state;

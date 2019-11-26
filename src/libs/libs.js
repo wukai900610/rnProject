@@ -1,43 +1,78 @@
-import React, { Component } from 'react';
-import {NavigationActions,StackActions} from 'react-navigation';
-import { Toast } from 'native-base';
+import React, {
+    Component
+} from 'react';
+import {
+    NavigationActions,
+    StackActions
+} from 'react-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
+import {
+    Toast
+} from 'native-base';
+
 import Qs from 'qs';
 import axios from 'axios';
 import STORE from '../store/store';
 
 let util = {};
 
-//字符串截取
-util.strSplit = (str,strLength)=>{
-    var newStr='';
-    var realLength = 0, len = str.length, charCode = -1;
-    if(str){
-    for (var i = 0; i < len; i++) {
-        if(realLength >= strLength){
-            return newStr + '...';
-        }
-        charCode = str.charCodeAt(i);
-        if (charCode >= 0 && charCode <= 128) {
-            realLength += 1;
-        } else {
-            realLength += 2;
-        }
-        newStr = newStr + str[i];
+util.setStore = async (key, value) => {
+    try {
+        await AsyncStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+        console.log('setStoreDate Err');
     }
-    return newStr;
-    }else{
+}
+
+util.getStore = async (key) => {
+    let value = await AsyncStorage.getItem(key);
+    return value
+    // try {
+    //     // return await AsyncStorage.getItem(key).then((value)=>{
+    //     //     return JSON.parse(value)
+    //     // });
+    //     let value = await AsyncStorage.getItem(key);
+    //
+    //     return JSON.parse(value)
+    //
+    // } catch (error) {
+    //     console.log('getStoreDate Err');
+    // }
+}
+
+//字符串截取
+util.strSplit = (str, strLength) => {
+    var newStr = '';
+    var realLength = 0,
+        len = str.length,
+        charCode = -1;
+    if (str) {
+        for (var i = 0; i < len; i++) {
+            if (realLength >= strLength) {
+                return newStr + '...';
+            }
+            charCode = str.charCodeAt(i);
+            if (charCode >= 0 && charCode <= 128) {
+                realLength += 1;
+            } else {
+                realLength += 2;
+            }
+            newStr = newStr + str[i];
+        }
+        return newStr;
+    } else {
         return '';
     }
 }
 
 util.ruleFun = {
-    'email':function (text) {
+    'email': function(text) {
         return /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(text);
     },
-    'phone':function (text) {
+    'phone': function(text) {
         return /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$/.test(text);
     },
-    'idCard':function (gets) {
+    'idCard': function(gets) {//身份证
         var reg = /^[^ ]$/; //不包含空格
         //该方法由佚名网友提供;
         var Wi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1]; // 加权因子;
@@ -93,31 +128,40 @@ util.ruleFun = {
             return true;
         }
     },
-    'n':function (text) {
+    'n': function(text) {
         return /^\d+$/.test(text);
     },
-    'z2-4':function (text) {
-        return /^[\u4E00-\u9FA5\uf900-\ufa2d]{2,4}$/.test(text);
+    'postCode':function (text) {//邮编
+        return /^[1-9]\d{5}(?!\d)$/.test(text);
     },
-    's':function (text) {
-        return /^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]+$/.test(text);
+    // 'z2-4': function(text) {
+    //     return /^[\u4E00-\u9FA5\uf900-\ufa2d]{2,4}$/.test(text);
+    // },
+    // 's': function(text) {
+    //     return /^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]+$/.test(text);
+    // },
+    // 's2-20': function(text) {
+    //     return /^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]{2,20}$/.test(text);
+    // },
+    // 's6-20': function(text) {
+    //     return /^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]{6,20}$/.test(text);
+    // },
+    '*2-30': function(text) {
+        return /^.{2,30}$/.test(text);
     },
-    's2-20':function (text) {
-        return /^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]{2,20}$/.test(text);
+    '*5-50': function(text) {
+        return /^.{5,50}$/.test(text);
     },
-    's6-20':function (text) {
-        return /^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]{6,20}$/.test(text);
-    },
-    '*':function (text) {
+    '*': function(text) {
         return /[\w\W]+/.test(text);
     }
 }
 
-util.getExhibitionConf = (code,exhibitions)=>{
+util.getExhibitionConf = (code, exhibitions) => {
     return exhibitions[code];
 }
 
-util.resetNavigation = (routeName)=>{
+util.resetNavigation = (routeName) => {
     console.log(StackActions)
     // return StackActions.reset({
     //     index: 0,
@@ -143,62 +187,75 @@ util.ajax = axios.create({
     }],
 });
 
-util.ajax.interceptors.request.use(function (config) {
+util.ajax.interceptors.request.use(function(config) {
     // console.log(config);
-    let {defaultEx,exhibitions,lan,Ticket} = STORE.getState().store;
+    let {
+        defaultEx,
+        exhibitions,
+        lan,
+        Ticket
+    } = STORE.getState().store;
     config.headers['Authorization'] = Ticket
-    let exhibition = util.getExhibitionConf(defaultEx,exhibitions);
-    if(config.method == 'get'){
+    let exhibition = util.getExhibitionConf(defaultEx, exhibitions);
+    if (config.method == 'get') {
         config.params = {
             ...config.params,
-            code:exhibition.code,
-            lan:lan
+            code: exhibition.code,
+            lan: lan
         }
-    }else{
+    } else {
         config.data = {
             ...config.data,
-            code:exhibition.code,
-            lan:lan
+            code: exhibition.code,
+            lan: lan
         }
     }
 
     return config;
-}, function (error) {
+}, function(error) {
     return Promise.reject(error);
 });
 
-util.ajax.interceptors.response.use(function (response) {
-    let {lan} = STORE.getState().store;
-    if(response.status == 200){
-        if(response.data.code == 200){
+util.ajax.interceptors.response.use(function(response) {
+    let {
+        lan
+    } = STORE.getState().store;
+    if (response.status == 200) {
+        if (response.data.code == 200) {
             return Promise.resolve(response.data);
-        }else{
+        } else {
             let msgs = response.data.msg.split('::');
             Toast.show({
                 text: lan == 'en' ? (msgs[1] || response.data.msg) : (msgs[0] || response.data.msg),
                 position: 'top',
                 type: 'danger',
-                textStyle: { fontSize: 13 }
+                textStyle: {
+                    fontSize: 13
+                }
             });
             return Promise.reject(response.data);
         }
-    }else{
+    } else {
         Toast.show({
             text: '连接失败',
             position: 'top',
             type: 'danger',
-            textStyle: { fontSize: 13 }
+            textStyle: {
+                fontSize: 13
+            }
         });
         return Promise.reject('连接失败-error1');
     }
-}, function (error) {
+}, function(error) {
     console.log('error')
     console.log(error)
     Toast.show({
         text: '错误',
         position: 'top',
         type: 'danger',
-        textStyle: { fontSize: 13 }
+        textStyle: {
+            fontSize: 13
+        }
     });
     return Promise.reject(error);
 });

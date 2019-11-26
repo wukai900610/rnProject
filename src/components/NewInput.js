@@ -4,21 +4,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Util from '../libs/libs';
 
-/*
-"match":/^(.+?)(\d+)-(\d+)$/,
-    "*":/[\w\W]+/,
-    "*6-16":/^[\w\W]{6,16}$/,
-    "n":/^\d+$/,
-    "n6-16":/^\d{6,16}$/,
-    "s":/^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]+$/,
-    "s6-18":/^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]{6,18}$/,
-    "p":/^[0-9]{6}$/,
-    "m":/^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$/,
-    "e":/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-    "url":/^(\w+:\/\/)?\w+(\.\w+)+.*$/,
-    "z2-4":/^[\u4E00-\u9FA5\uf900-\ufa2d]{2,4}$/
-*/
-
 // showClearTextBtn 是否显示清除按钮
 // inputChange 事件
 // rule 规则
@@ -28,49 +13,39 @@ class NewInput extends React.Component {
 
         this.state={
             status:'',
-            text:this.props.defaultText ? this.props.defaultText : ''
+            editable:this.props.editable || '',
+            text:this.props.defaultText || ''
         }
     }
 
     setText(text){
-        this.setState({
-            text:text
-        });
+        // this.setState({
+        //     text:text
+        // });
 
         let {rule} = this.props;
         let status = '';
         //规则库
         if(rule){
-            if(rule.test == 'checkPassword'){
-                if(Util.ruleFun[rule.passwodRule](text) && text == this.props.rule.password){
-                    status = 'pass'
-                }else{
-                    status = 'fail'
-                }
+            if(rule == 'checkPassword'){
+                // if(Util.ruleFun[rule](text) && text == this.props.rule.password){
+                //     status = 'pass'
+                // }else{
+                //     status = 'fail'
+                // }
             }else{
-                if(Util.ruleFun[rule.test](text)){
+                if(Util.ruleFun[rule](text)){
                     status = 'pass'
                 }else{
                     status = 'fail'
                 }
             }
-
-            this.setState({
-                status:status
-            })
-
-            //     if(rule.test.test(text)){
-            //         status = 'pass'
-            //         this.setState({
-            //             status:status
-            //         })
-            //     }else{
-            //         status = 'fail'
-            //         this.setState({
-            //             status:status
-            //         })
-            //     }
         }
+
+        this.setState({
+            text:text,
+            status:status
+        })
 
         if(this.props.inputChange != undefined){
             this.props.inputChange({
@@ -80,9 +55,9 @@ class NewInput extends React.Component {
     }
 
     _clearText(){
-        let {rule} = this.props;
+        let {rule,required} = this.props;
         if(rule !==undefined){
-            if(rule.required){
+            if(required){
                 this.setState({
                     text:'',
                     status:'fail'
@@ -109,7 +84,7 @@ class NewInput extends React.Component {
     }
 
     renderClearTextBtn(){
-        if(this.props.editable != false){
+        if(this.state.editable != false){
             if(this.props.showClearTextBtn != false){
                 if(this.state.text.length > 0){
                     return (
@@ -124,13 +99,16 @@ class NewInput extends React.Component {
     }
 
     renderIconStatus(status){
-        if(status == 'pass'){
-            return (
-                <View style={styles.status}>
-                    <Ionicons color='#4caf50' name='md-checkmark-circle' size={20}/>
-                </View>
-            )
+        if(this.state.editable != false){
+            if(status == 'pass'){
+                return (
+                    <View style={styles.status}>
+                        <Ionicons color='#4caf50' name='md-checkmark-circle' size={20}/>
+                    </View>
+                )
+            }
         }
+
         // else if(status == 'fail'){
         //     return (
         //         <View style={styles.status}>
@@ -140,13 +118,14 @@ class NewInput extends React.Component {
         // }
     }
 
+    // 是否是必填项
     _checkRequired(){
-        let {rule} = this.props;
-        let {text} = this.state;
+        let {rule,required} = this.props;
+        let {text,editable} = this.state;
         let status = '';
 
-        if(rule){
-            if(rule.required){
+        if(editable != false){
+            if(required){
                 if(text == ''){
                     status = 'fail'
                     this.setState({
@@ -159,11 +138,35 @@ class NewInput extends React.Component {
                     })
                 }
             }
+        }else{
+            this.setState({
+                status:status
+            })
         }
     }
 
     componentDidMount(){
         this._checkRequired();
+    }
+
+    componentWillReceiveProps(nextProps){
+        let {defaultText,editable} = this.props;
+        if(!editable && nextProps.defaultText !== defaultText){
+            // console.log('defaultText');
+            this.setState({
+                text:nextProps.defaultText
+            },()=>{
+                this._checkRequired();
+            })
+        }
+
+        if(nextProps.editable != editable){
+            this.setState({
+                editable:nextProps.editable
+            },()=>{
+                this._checkRequired();
+            })
+        }
     }
 
     render() {
@@ -175,8 +178,8 @@ class NewInput extends React.Component {
                 <Text style={styles.label}>{label}</Text>
                 <TextInput underlineColorAndroid="transparent" autoCapitalize="none" {...this.props} style={styles.inputText} value={this.state.text} autoCorrect={false} onChangeText={(text) => {this.setText(text)}} />
 
-                {this.renderClearTextBtn()}
                 {this.renderIconStatus(status)}
+                {this.renderClearTextBtn()}
             </View>
         );
     }
@@ -202,8 +205,7 @@ const styles = {
         marginRight:10
     },
     label:{
-        paddingLeft:10,
-        // paddingRight:5,
+        paddingRight:5,
         color:'#666',
         fontSize:15
     },
