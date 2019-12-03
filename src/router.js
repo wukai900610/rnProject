@@ -23,6 +23,8 @@ import MatchupExpoDetail from './views/MatchupExpo/Detail.js';
 import Login from './views/Login.js';
 import About from './views/About.js';
 import Abroad from './views/UserCenter/Abroad.js';
+import Company from './views/UserCenter/Company/Index.js';
+import CompanyDetail from './views/UserCenter/Company/CompanyDetail.js';
 import Settings from './views/UserCenter/Settings.js';
 import Other from './views/UserCenter/Other.js';
 
@@ -135,6 +137,24 @@ var stackRoutes = {
         },
         navigationOptions: {
             title: '报名信息',
+        }
+    },
+    Company: {
+        screen: Company,
+        params:{
+            auth:true,
+        },
+        navigationOptions: {
+            title: '公司信息',
+        }
+    },
+    CompanyDetail: {
+        screen: CompanyDetail,
+        params:{
+            auth:true,
+        },
+        navigationOptions: {
+            title: '公司详情信息',
         }
     },
     Settings: {

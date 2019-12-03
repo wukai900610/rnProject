@@ -13,6 +13,7 @@ import {
 import Qs from 'qs';
 import axios from 'axios';
 import STORE from '../store/store';
+import I18n from "../language/I18n.js";
 
 let util = {};
 
@@ -173,8 +174,10 @@ util.resetNavigation = (routeName) => {
     // console.log(NavigationActions)
 }
 
+util.domain = 'http://b2b.nigeriatex.com'
+
 util.ajax = axios.create({
-    baseURL: 'http://b2b.nigeriatex.com/api',
+    baseURL: util.domain + '/api',
     // timeout: 2000,
     // headers: {'content-type':'application/json;charset=UTF-8'},
     // paramsSerializer: function(params) {
@@ -192,7 +195,7 @@ util.ajax.interceptors.request.use(function(config) {
     let {
         defaultEx,
         exhibitions,
-        lan,
+        // lan,
         Ticket
     } = STORE.getState().store;
     config.headers['Authorization'] = Ticket
@@ -201,13 +204,13 @@ util.ajax.interceptors.request.use(function(config) {
         config.params = {
             ...config.params,
             code: exhibition.code,
-            lan: lan
+            lan: I18n.locale
         }
     } else {
         config.data = {
             ...config.data,
             code: exhibition.code,
-            lan: lan
+            lan: I18n.locale
         }
     }
 
@@ -216,69 +219,44 @@ util.ajax.interceptors.request.use(function(config) {
     return Promise.reject(error);
 });
 
-util.ajax.interceptors.response.use(function(response) {
-    let {
-        lan
-    } = STORE.getState().store;
-    if (response.status == 200) {
-        if (response.data.code == 200) {
-            return Promise.resolve(response.data);
-        } else {
-            let msgs = response.data.msg.split('::');
-            Toast.show({
-                text: lan == 'en' ? (msgs[1] || response.data.msg) : (msgs[0] || response.data.msg),
-                position: 'top',
-                type: 'danger',
-                textStyle: {
-                    fontSize: 13
-                }
-            });
-            return Promise.reject(response.data);
-        }
+util.ajax.interceptors.response.use(function(result) {
+    // let {
+    //     lan
+    // } = STORE.getState().store
+
+    const res = result.data
+
+    // 263:消息管理页面标记消息已读未读
+    // 243:展会管理页面提交信息
+    if (res.code == 200 || res.code == 263 || res.code == 243) { //正常
+        return Promise.resolve(res)
     } else {
+        // 前中后英
+        let msgs = res.msg.split('::')
         Toast.show({
-            text: '连接失败',
+            text: I18n.locale == 'en' ? (msgs[1] || res.msg) : (msgs[0] || res.msg),
             position: 'top',
             type: 'danger',
             textStyle: {
                 fontSize: 13
             }
         });
-        return Promise.reject('连接失败-error1');
+        return Promise.reject(res);
     }
 }, function(error) {
-    console.log('error')
-    console.log(error)
+    // let {
+    //     lan
+    // } = STORE.getState().store
+
     Toast.show({
-        text: '错误',
+        text:I18n.locale == 'en' ? 'Network connection failed' : '网络连接失败',
         position: 'top',
         type: 'danger',
         textStyle: {
             fontSize: 13
         }
-    });
+    })
     return Promise.reject(error);
 });
-
-// util.checkUserState = function (navigation) {
-//     STORAGE.load({
-//         key:'frontUser'
-//     }).then(ret => {
-//     }).catch((e)=>{
-//         util.reset(navigation,{ routeName:'LoginPage',params:{from:'ServiceHallPage'} })
-//     })
-// }
-//
-// util.reset = (navigation, route, params) => {
-//     // console.log(NavigationActions);
-//     const resetAction = NavigationActions.reset({
-//         index: 1,
-//         actions: [
-//             NavigationActions.navigate({routeName:'RootTabs'}),
-//             NavigationActions.navigate(route),
-//         ],
-//     });
-//     navigation.dispatch(resetAction);
-// }
 
 export default util;
