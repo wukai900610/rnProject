@@ -12,6 +12,12 @@ import Util from '../../../libs/libs';
 import NewInput from '../../../components/NewInput';
 
 export default class App extends Component {
+    static navigationOptions = ({ navigation }) => {
+        return{
+            title:strings('My.ManageCompanies.title'),
+        }
+    };
+
     constructor(props) {
         super(props);
 
@@ -22,37 +28,35 @@ export default class App extends Component {
 
     componentDidMount(){
         let _this = this;
-        const { navigation } = this.props;
-        // 公司展会列表
-        if(navigation.state.params.id){
-            Util.ajax({
-                method: 'get',
-                url:'/B2BSupply/GetMyList',
-                params:{
-                    page: 1,
-                    size: 10,
-                    Title: '',
-                    IsCheck: '',
-                    id: ''
-                }
-            }).then((response)=>{
-                _this.setState({
-                    tableData:response.data
-                });
-            })
-        }
+
+        Util.ajax({
+            method: 'get',
+            url:'/B2BSupply/GetMyList',
+            params:{
+                page: 1,
+                size: 10,
+                Title: '',
+                IsCheck: '',
+                ID: ''
+            }
+        }).then((response)=>{
+            _this.setState({
+                tableData:response.data
+            });
+        })
     }
 
     renderList(){
         const { navigation } = this.props;
         let list = [];
         this.state.tableData.map((item,index)=>{
+            let title = I18n.locale == 'zh' ? item.Title : item.TitleEn;
             list.push(
-                <TouchableOpacity key={index} onPress={()=>{navigation.navigate('CompanyDetail',{id:item.ID})}}>
+                <TouchableOpacity key={index} onPress={()=>{navigation.navigate('CompanyDetail',{id:item.ID,name:item.Name})}}>
                     <CardItem>
                         <Thumbnail style={{marginRight:10}} source={{uri: Util.domain + item.Img}} />
                         <Body>
-                            <Text>{I18n.locale == 'zh' ? item.Title : item.TitleEn}</Text>
+                            <Text>{title}</Text>
                             <Text note>{item.Description}</Text>
                         </Body>
                     </CardItem>

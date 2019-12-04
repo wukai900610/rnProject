@@ -330,4 +330,7 @@ export default {
         tel: "联系电话",
         ContactPerson: '联系人',
     },
+    prompt:{
+        delete:'确认删除'
+    }
 }

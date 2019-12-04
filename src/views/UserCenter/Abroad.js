@@ -11,6 +11,12 @@ import Util from '../../libs/libs';
 import NewInput from '../../components/NewInput';
 
 export default class App extends Component {
+    static navigationOptions = ({ navigation }) => {
+        return{
+            title:strings('My.ExhibitionManagement.title'),
+        }
+    };
+
     constructor(props) {
         super(props);
         let {navigation} = this.props;

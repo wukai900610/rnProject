@@ -1,6 +1,8 @@
 import React,{Fragment,Component}  from 'react';
 import {
   View,
+  Image,
+  TouchableOpacity
 } from 'react-native';
 import { Content,Button,Input,Text,Toast } from 'native-base';
 import Layout  from '../../../components/Layout';
@@ -9,8 +11,16 @@ import {strings} from '../../../language/I18n.js';
 
 import Util from '../../../libs/libs';
 import NewInput from '../../../components/NewInput';
+import ImagePicker from 'react-native-image-picker';
 
 export default class App extends Component {
+    static navigationOptions = ({ navigation }) => {
+        const { params } = navigation.state;
+        return{
+            title:params.name,
+        }
+    };
+
     constructor(props) {
         super(props);
         let {navigation} = this.props;
@@ -19,6 +29,7 @@ export default class App extends Component {
         this.state = {
             editable:navigation.state.params.id ? false : true,
             tableData:{},
+            avatarSource:require('../../../static/upload.png')
         }
     }
 
@@ -79,14 +90,45 @@ export default class App extends Component {
         })
     }
 
+    selectPhoto(){
+        const options = {
+            title: strings('form.OfferPhoto'),
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log(response);
+
+            if (response.didCancel) {
+                console.log('取消');
+            } else if (response.error) {
+                console.log('错误: ', response.error);
+            } else {
+                const source = {
+                    uri: response.uri
+                };
+
+                // base64
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                this.setState({
+                    avatarSource: source,
+                });
+            }
+        });
+    }
+
     componentDidMount(){
         let _this = this;
         const { navigation } = this.props;
-        // 公司展会列表
+
         if(navigation.state.params.id){
             Util.ajax({
                 method: 'get',
-                url:'/b2bsupply/get',
+                url:'/b2boffer/get',
                 params:{
                     id: navigation.state.params.id
                 }
@@ -100,32 +142,24 @@ export default class App extends Component {
     }
 
     render() {
-        const { tableData,editable } = this.state;
+        const { tableData,editable,avatarSource } = this.state;
 
         return (
             <Layout>
                 <Content>
                     <View style={styles.content}>
                         <View style={styles.block}>
-                            <NewInput ref={(e) => {this.inputs.Name = e;}} label={strings('form.CompanyName')} editable={editable} placeholder={strings('form.CompanyName')} defaultText={tableData.Name} rule='*2-30' required={true} />
-                            <NewInput ref={(e) => {this.inputs.ManName = e;}} label={strings('form.ContactPerson')} editable={editable} placeholder={strings('form.ContactPerson')} defaultText={tableData.ManName} rule='*2-30' required={true} />
+                            <NewInput ref={(e) => {this.inputs.Name = e;}} label={strings('form.OfferName')} editable={editable} placeholder={strings('form.OfferName')} defaultText={tableData.Name} rule='*2-30' required={true} />
+
+                            <TouchableOpacity onPress={()=>{this.selectPhoto()}}>
+                                <Image source={avatarSource} style={{marginTop:10,width:64}} />
+                            </TouchableOpacity>
+                            {/*<NewInput ref={(e) => {this.inputs.ManName = e;}} label={strings('form.OfferCategory')} editable={editable} placeholder={strings('form.OfferCategory')} defaultText={tableData.ManName} rule='*2-30' required={true} />*/}
+
+                            <NewInput ref={(e) => {this.inputs.Description = e;}} label={strings('form.OfferDescription')} editable={editable} placeholder={strings('form.OfferDescription')} defaultText={tableData.Description} rule='*2-30' required={true} />
+                            <NewInput ref={(e) => {this.inputs.Summary = e;}} label={strings('form.Summary')} editable={editable} placeholder={strings('form.Summary')} defaultText={tableData.Summary} rule='*2-30' required={true} />
                         </View>
-                        <View style={styles.block}>
-                            <Text>{strings('form.Mobilephone')}</Text>
-                            <NewInput ref={(e) => {this.inputs.ManPhoneCountryCode = e;}} label={strings('form.CountryCode')} editable={editable} placeholder={strings('form.CountryCode')} defaultText={tableData.ManPhoneCountryCode} />
-                            <NewInput ref={(e) => {this.inputs.ManPhone = e;}} label={strings('form.Mobilephone')} editable={editable} placeholder={strings('form.Mobilephone')} defaultText={tableData.ManPhone} rule='phone' required={true} />
-                        </View>
-                        <View style={styles.block}>
-                            <Text>{strings('form.ContactSoftware')}</Text>
-                            <NewInput ref={(e) => {this.inputs.ManWeChat = e;}} label={strings('form.WeChat')} editable={editable} placeholder={strings('form.WeChat')} defaultText={tableData.ManWeChat} />
-                            <NewInput ref={(e) => {this.inputs.ManFacebook = e;}} label={strings('form.Facebook')} editable={editable} placeholder={strings('form.Facebook')} defaultText={tableData.ManFacebook} required={true} />
-                            <NewInput ref={(e) => {this.inputs.ManWhatsapp = e;}} label={strings('form.Whatsapp')} editable={editable} placeholder={strings('form.Whatsapp')} defaultText={tableData.ManWhatsapp} required={true} />
-                        </View>
-                        <View style={styles.block}>
-                            <NewInput ref={(e) => {this.inputs.WebSite = e;}} label={strings('form.Website')} editable={editable} placeholder={strings('form.Website')} defaultText={tableData.WebSite} />
-                            <NewInput ref={(e) => {this.inputs.Description = e;}} label={strings('form.CompanyDescription')} editable={editable} placeholder={strings('form.CompanyDescription')} defaultText={tableData.Description} />
-                            <NewInput ref={(e) => {this.inputs.Description = e;}} label={strings('form.Summary')} editable={editable} placeholder={strings('form.Summary')} defaultText={tableData.Summary} />
-                        </View>
+
 
                         {this.renderSubmit()}
                     </View>

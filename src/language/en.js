@@ -332,4 +332,7 @@ export default {
         tel: "Tel",
         ContactPerson: 'Contact Person',
     },
+    prompt:{
+        delete:'Confirm to delete this data'
+    }
 }

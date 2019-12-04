@@ -24,7 +24,9 @@ import Login from './views/Login.js';
 import About from './views/About.js';
 import Abroad from './views/UserCenter/Abroad.js';
 import Company from './views/UserCenter/Company/Index.js';
-import CompanyDetail from './views/UserCenter/Company/CompanyDetail.js';
+import CompanyDetail from './views/UserCenter/Company/Detail.js';
+import Offer from './views/UserCenter/Offer/Index.js';
+import OfferDetail from './views/UserCenter/Offer/Detail.js';
 import Settings from './views/UserCenter/Settings.js';
 import Other from './views/UserCenter/Other.js';
 
@@ -135,27 +137,30 @@ var stackRoutes = {
         params:{
             auth:true,
         },
-        navigationOptions: {
-            title: '报名信息',
-        }
     },
     Company: {
         screen: Company,
         params:{
             auth:true,
         },
-        navigationOptions: {
-            title: '公司信息',
-        }
     },
     CompanyDetail: {
         screen: CompanyDetail,
         params:{
             auth:true,
         },
-        navigationOptions: {
-            title: '公司详情信息',
-        }
+    },
+    Offer: {
+        screen: Offer,
+        params:{
+            auth:true,
+        },
+    },
+    OfferDetail: {
+        screen: OfferDetail,
+        params:{
+            auth:true,
+        },
     },
     Settings: {
         screen: Settings,
