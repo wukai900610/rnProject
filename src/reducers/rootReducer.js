@@ -60,8 +60,8 @@ let store = (state = initialState,action)=>{
         Util.setStore('User',action.value.User)
         return {...state,...action.value}
     }else if (action.type === 'LOGIN_FAIL' || action.type === 'LOGINOUT_SUCCESS') {
-        Util.setStoreDate('Ticket','')
-        Util.setStoreDate('User',{})
+        Util.setStore('Ticket','')
+        Util.setStore('User',{})
         return {...state,userInfo:{},Ticket:'',isExhibitor:''}
     }
     return state;

@@ -109,6 +109,10 @@ export default {
             Fax:'传真：+86-20-34053698',
         },
     },
+    tool:{
+        takePhotoButtonTitle:'拍照',
+        chooseFromLibraryButtonTitle:'从相册选择',
+    },
     form: {
         LoginPass: '密码',
         ReLoginPass: '重新输入密码',
@@ -121,6 +125,8 @@ export default {
         modify:'修改',
         edit: '编辑',
         delete: '删除',
+        confirm: '确定',
+        select:'请选择',
         code: {
             label: '验证码',
             placeholder: '请输入验证码',
@@ -149,9 +155,6 @@ export default {
         OfferPhoto: '商机照片',
         OfferDescription: '商机介绍',
         Establish: '创建',
-        cancel: '取消',
-        confirm: '确定',
-        Edit: '编辑',
         seek: '合作',
         cooperation: '求购',
         Submit: '提交',

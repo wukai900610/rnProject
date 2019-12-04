@@ -42,7 +42,7 @@ util.setStore = async (key, value) => {
     try {
         await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-        console.log('setStoreDate Err');
+        console.log('setStore Err');
     }
 }
 

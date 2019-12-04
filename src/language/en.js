@@ -109,6 +109,10 @@ export default {
             Fax:'Fax:+86-20-34053698',
         },
     },
+    tool:{
+        takePhotoButtonTitle:'Take Photo',
+        chooseFromLibraryButtonTitle:'Choose from Library',
+    },
     form: {
         LoginPass: 'password',
         ReLoginPass: 'Re-enter password',
@@ -121,6 +125,8 @@ export default {
         modify:'modify',
         edit: 'Edit',
         delete: 'Delete',
+        confirm: 'Confirm',
+        select:'select',
         code: {
             label: 'code',
             placeholder: 'Please Enter Code',
@@ -149,9 +155,6 @@ export default {
         OfferPhoto: 'Offer Photo',
         OfferDescription: 'Offer Description',
         Establish: 'Add',
-        cancel: 'Cancel',
-        Edit: 'Edit',
-        confirm: 'Confirm',
         seek: 'Buy',
         cooperation: 'Cooperation',
         Submit: 'Submit',
